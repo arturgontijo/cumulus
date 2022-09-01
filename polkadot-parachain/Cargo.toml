@@ -68,11 +68,11 @@ pallet-transaction-payment-rpc = { git = "https://github.com/arturgontijo/substr
 pallet-contracts-rpc = { git = "https://github.com/arturgontijo/substrate", branch = "master" }
 
 # Polkadot
-polkadot-cli = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3" }
-polkadot-parachain = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3" }
-polkadot-primitives = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3" }
-polkadot-service = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3" }
-xcm = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3" }
+polkadot-cli = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3-dbg" }
+polkadot-parachain = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3-dbg" }
+polkadot-primitives = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3-dbg" }
+polkadot-service = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3-dbg" }
+xcm = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3-dbg" }
 
 # Cumulus
 cumulus-client-cli = { path = "../client/cli" }
@@ -97,7 +97,7 @@ tempfile = "3.3.0"
 tokio = { version = "1.19.2", features = ["macros", "time", "parking_lot"] }
 wait-timeout = "0.2"
 # purge_chain_works works with rococo-local and needs to allow this
-polkadot-cli = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3", features = ["rococo-native"] }
+polkadot-cli = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3-dbg", features = ["rococo-native"] }
 
 [features]
 default = []

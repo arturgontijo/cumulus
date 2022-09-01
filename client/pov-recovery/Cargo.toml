@@ -21,10 +21,10 @@ sp-maybe-compressed-blob = { git = "https://github.com/arturgontijo/substrate", 
 sp-runtime = { git = "https://github.com/arturgontijo/substrate", branch = "master" }
 
 # Polkadot
-polkadot-node-primitives = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3" }
-polkadot-node-subsystem = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3" }
-polkadot-overseer = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3" }
-polkadot-primitives = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3" }
+polkadot-node-primitives = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3-dbg" }
+polkadot-node-subsystem = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3-dbg" }
+polkadot-overseer = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3-dbg" }
+polkadot-primitives = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3-dbg" }
 
 # Cumulus
 cumulus-primitives-core = { path = "../../primitives/core" }

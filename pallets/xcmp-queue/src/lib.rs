@@ -1120,35 +1120,49 @@ impl<T: Config> SendXcm for Pallet<T> {
 		dest: &mut Option<MultiLocation>,
 		msg: &mut Option<Xcm<()>>,
 	) -> SendResult<(ParaId, VersionedXcm<()>)> {
+		log::debug!(target: "xcm::queue", "validate() -> 0!");
 		let d = dest.take().ok_or(SendError::MissingArgument)?;
-		let xcm = msg.take().ok_or(SendError::MissingArgument)?;
+		log::debug!(target: "xcm::queue", "validate() -> d: {:?}", d.clone());
+		log::debug!(target: "xcm::queue", "validate() -> msg.len: {:?}", msg.clone().unwrap_or(Xcm::default()).len());
 
 		match &d {
 			// An HRMP message for a sibling parachain.
 			MultiLocation { parents: 1, interior: X1(Parachain(id)) } => {
+				log::debug!(target: "xcm::queue", "validate() -> 1!");
 				let id = ParaId::from(*id);
+				let xcm = msg.take().ok_or(SendError::MissingArgument)?;
+				log::debug!(target: "xcm::queue", "validate() -> xcm: {:?}", xcm.clone());
 				let price = T::PriceForSiblingDelivery::price_for_sibling_delivery(id, &xcm);
 				let versioned_xcm = T::VersionWrapper::wrap_version(&d, xcm)
 					.map_err(|()| SendError::DestinationUnsupported)?;
+				log::debug!(target: "xcm::queue", "validate() -> 2!");
 				Ok(((id, versioned_xcm), price))
 			},
 			// Anything else is unhandled. This includes a message this is meant for us.
 			_ => {
+				log::debug!(target: "xcm::queue", "validate() -> 3!");
 				*dest = Some(d);
+				log::debug!(target: "xcm::queue", "validate() -> dest: {:?}", dest.clone());
 				Err(SendError::NotApplicable)
 			},
 		}
 	}
 
 	fn deliver((id, xcm): (ParaId, VersionedXcm<()>)) -> Result<XcmHash, SendError> {
+		log::debug!(target: "xcm::queue", "deliver() -> 0!");
 		let hash = xcm.using_encoded(sp_io::hashing::blake2_256);
 
+		log::debug!(target: "xcm::queue", "deliver() -> id: {:?}", u32::from(id.clone()));
 		match Self::send_fragment(id, XcmpMessageFormat::ConcatenatedVersionedXcm, xcm) {
 			Ok(_) => {
+				log::debug!(target: "xcm::queue", "deliver() -> 1!");
 				Self::deposit_event(Event::XcmpMessageSent { message_hash: Some(hash) });
 				Ok(hash)
 			},
-			Err(e) => Err(SendError::Transport(<&'static str>::from(e))),
+			Err(e) => {
+				log::debug!(target: "xcm::queue", "deliver() -> 2!");
+				Err(SendError::Transport(<&'static str>::from(e)))
+			},
 		}
 	}
 }

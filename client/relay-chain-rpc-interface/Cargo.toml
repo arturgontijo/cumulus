@@ -6,7 +6,7 @@ edition = "2021"
 
 
 [dependencies]
-polkadot-service = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3" }
+polkadot-service = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3-dbg" }
 
 cumulus-primitives-core = { path = "../../primitives/core" }
 cumulus-relay-chain-interface = { path = "../relay-chain-interface" }

@@ -71,18 +71,31 @@ where
 		dest: &mut Option<MultiLocation>,
 		msg: &mut Option<Xcm<()>>,
 	) -> SendResult<Vec<u8>> {
+		log::debug!(target: "xcm::ParentAsUmp", "validate() -> 0!");
 		let d = dest.take().ok_or(SendError::MissingArgument)?;
-		let xcm = msg.take().ok_or(SendError::MissingArgument)?;
+		log::debug!(target: "xcm::ParentAsUmp", "validate() -> d: {:?}", d.clone());
+		log::debug!(target: "xcm::ParentAsUmp", "validate() -> msg.len: {:?}", msg.clone().unwrap_or(Xcm::default()).len());
 
+		log::debug!(target: "xcm::ParentAsUmp", "validate() -> 1!");
 		if d.contains_parents_only(1) {
+			log::debug!(target: "xcm::ParentAsUmp", "validate() -> 2!");
 			// An upward message for the relay chain.
+			let xcm = msg.take().ok_or(SendError::MissingArgument)?;
 			let price = P::price_for_parent_delivery(&xcm);
 			let versioned_xcm =
 				W::wrap_version(&d, xcm).map_err(|()| SendError::DestinationUnsupported)?;
 			let data = versioned_xcm.encode();
 
+			log::debug!(
+				target: "xcm::ParentAsUmp",
+				"validate() -> data: {:?}, price: {:?}", data.clone(), price.clone()
+			);
 			Ok((data, price))
 		} else {
+			log::debug!(
+				target: "xcm::ParentAsUmp",
+				"validate()#else -> dest: {:?}, d: {:?}", dest.clone(), d.clone()
+			);
 			*dest = Some(d);
 			// Anything else is unhandled. This includes a message this is meant for us.
 			Err(SendError::NotApplicable)
@@ -92,11 +105,13 @@ where
 	fn deliver(data: Vec<u8>) -> Result<XcmHash, SendError> {
 		let hash = data.using_encoded(sp_io::hashing::blake2_256);
 
+		log::debug!(target: "xcm::ParentAsUmp", "deliver() -> 0!");
+		log::debug!(target: "xcm::ParentAsUmp", "deliver() -> {:?}", data.clone());
 		T::send_upward_message(data).map_err(|e| match e {
 			MessageSendError::TooBig => SendError::ExceedsMaxMessageSize,
 			e => SendError::Transport(e.into()),
 		})?;
-
+		log::debug!(target: "xcm::ParentAsUmp", "deliver() -> 1!");
 		Ok(hash)
 	}
 }

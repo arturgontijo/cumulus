@@ -15,9 +15,9 @@ sp-std = { git = "https://github.com/arturgontijo/substrate", default-features =
 sp-trie = { git = "https://github.com/arturgontijo/substrate", default-features = false, branch = "master" }
 
 # Polkadot
-polkadot-core-primitives = { git = "https://github.com/arturgontijo/polkadot", default-features = false, branch = "trappist-xcm-v3" }
-polkadot-parachain = { git = "https://github.com/arturgontijo/polkadot", default-features = false, branch = "trappist-xcm-v3" }
-polkadot-primitives = { git = "https://github.com/arturgontijo/polkadot", default-features = false, branch = "trappist-xcm-v3" }
+polkadot-core-primitives = { git = "https://github.com/arturgontijo/polkadot", default-features = false, branch = "trappist-xcm-v3-dbg" }
+polkadot-parachain = { git = "https://github.com/arturgontijo/polkadot", default-features = false, branch = "trappist-xcm-v3-dbg" }
+polkadot-primitives = { git = "https://github.com/arturgontijo/polkadot", default-features = false, branch = "trappist-xcm-v3-dbg" }
 
 [features]
 default = [ "std" ]

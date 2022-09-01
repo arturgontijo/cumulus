@@ -24,9 +24,9 @@ sp-runtime = { git = "https://github.com/arturgontijo/substrate", branch = "mast
 sp-state-machine = { git = "https://github.com/arturgontijo/substrate", branch = "master" }
 
 # Polkadot
-polkadot-node-primitives = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3" }
-polkadot-parachain = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3" }
-polkadot-primitives = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3" }
+polkadot-node-primitives = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3-dbg" }
+polkadot-parachain = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3-dbg" }
+polkadot-primitives = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3-dbg" }
 
 # Cumulus
 cumulus-relay-chain-interface = { path = "../relay-chain-interface" }
@@ -46,9 +46,9 @@ sp-keystore = { git = "https://github.com/arturgontijo/substrate", branch = "mas
 substrate-test-utils = { git = "https://github.com/arturgontijo/substrate", branch = "master" }
 
 # Polkadot
-polkadot-client = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3" }
-polkadot-service = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3" }
-polkadot-test-client = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3" }
+polkadot-client = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3-dbg" }
+polkadot-service = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3-dbg" }
+polkadot-test-client = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3-dbg" }
 
 # Cumulus
 cumulus-primitives-core = { path = "../../primitives/core" }

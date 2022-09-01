@@ -22,7 +22,7 @@ sp-runtime = { git = "https://github.com/arturgontijo/substrate", branch = "mast
 sp-trie = { git = "https://github.com/arturgontijo/substrate", branch = "master" }
 
 # Polkadot
-polkadot-primitives = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3" }
+polkadot-primitives = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3-dbg" }
 
 # Cumulus
 cumulus-relay-chain-interface = { path = "../../relay-chain-interface" }

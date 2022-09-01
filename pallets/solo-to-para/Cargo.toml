@@ -17,7 +17,7 @@ sp-runtime = { git = "https://github.com/arturgontijo/substrate", default-featur
 sp-std = { git = "https://github.com/arturgontijo/substrate", default-features = false, branch = "master" }
 
 # Polkadot
-polkadot-primitives = { git = "https://github.com/arturgontijo/polkadot", default-features = false, branch = "trappist-xcm-v3" }
+polkadot-primitives = { git = "https://github.com/arturgontijo/polkadot", default-features = false, branch = "trappist-xcm-v3-dbg" }
 
 # Cumulus
 cumulus-pallet-parachain-system = { default-features = false, path = "../parachain-system" }

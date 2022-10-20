@@ -22,8 +22,8 @@ sp-core = { git = "https://github.com/paritytech/substrate", branch = "polkadot-
 sp-runtime = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.30" }
 
 # Polkadot
-polkadot-overseer = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.30" }
-polkadot-primitives = { git = "https://github.com/paritytech/polkadot", branch = "release-v0.9.30" }
+polkadot-overseer = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3" }
+polkadot-primitives = { git = "https://github.com/arturgontijo/polkadot", branch = "trappist-xcm-v3" }
 
 # Cumulus
 cumulus-client-cli = { path = "../cli" }

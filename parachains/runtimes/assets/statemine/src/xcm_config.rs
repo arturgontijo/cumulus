@@ -19,7 +19,7 @@ use super::{
 };
 use frame_support::{
 	match_types, parameter_types,
-	traits::{Everything, Nothing, PalletInfoAccess},
+	traits::{ConstU32, Everything, Nothing, PalletInfoAccess},
 };
 use pallet_xcm::XcmPassthrough;
 use parachains_common::{
@@ -34,8 +34,8 @@ use xcm::latest::prelude::*;
 use xcm_builder::{
 	AccountId32Aliases, AllowKnownQueryResponses, AllowSubscriptionsFrom,
 	AllowTopLevelPaidExecutionFrom, AllowUnpaidExecutionFrom, AsPrefixedGeneralIndex,
-	ConvertedConcreteAssetId, CurrencyAdapter, EnsureXcmOrigin, FungiblesAdapter, IsConcrete,
-	LocationInverter, NativeAsset, ParentAsSuperuser, ParentIsPreset, RelayChainAsNative,
+	ConvertedConcreteId, CurrencyAdapter, EnsureXcmOrigin, FungiblesAdapter,
+	IsConcrete, NativeAsset, ParentAsSuperuser, ParentIsPreset, RelayChainAsNative,
 	SiblingParachainAsNative, SiblingParachainConvertsVia, SignedAccountId32AsNative,
 	SignedToAccountId32, SovereignSignedViaLocation, TakeWeightCredit, UsingComponents,
 	WeightInfoBounds,
@@ -46,8 +46,8 @@ parameter_types! {
 	pub const KsmLocation: MultiLocation = MultiLocation::parent();
 	pub const RelayNetwork: NetworkId = NetworkId::Kusama;
 	pub RelayChainOrigin: RuntimeOrigin = cumulus_pallet_xcm::Origin::Relay.into();
-	pub Ancestry: MultiLocation = Parachain(ParachainInfo::parachain_id().into()).into();
-	pub const Local: MultiLocation = Here.into();
+	pub UniversalLocation: InteriorMultiLocation = X1(Parachain(ParachainInfo::parachain_id().into()));
+	pub const Local: MultiLocation = Here.into_location();
 	pub AssetsPalletLocation: MultiLocation =
 		PalletInstance(<Assets as PalletInfoAccess>::index() as u8).into();
 	pub CheckingAccount: AccountId = PolkadotXcm::check_account();
@@ -84,7 +84,7 @@ pub type FungiblesTransactor = FungiblesAdapter<
 	// Use this fungibles implementation:
 	Assets,
 	// Use this currency when it is a fungible asset matching the given location or name:
-	ConvertedConcreteAssetId<
+	ConvertedConcreteId<
 		AssetId,
 		Balance,
 		AsPrefixedGeneralIndex<AssetsPalletLocation, AssetId, JustTry>,
@@ -128,7 +128,10 @@ pub type XcmOriginToTransactDispatchOrigin = (
 );
 
 parameter_types! {
+	// One XCM operation is 1_000_000_000 weight - almost certainly a conservative estimate.
+	pub UnitWeightCost: u64 = 1_000_000_000;
 	pub const MaxInstructions: u32 = 100;
+	pub const MaxAssetsIntoHolding: u32 = 64;
 	pub XcmAssetFeesReceiver: Option<AccountId> = Authorship::author();
 }
 
@@ -168,7 +171,7 @@ impl xcm_executor::Config for XcmConfig {
 	// For KSM, users must use teleport where allowed (e.g. with the Relay Chain).
 	type IsReserve = ();
 	type IsTeleporter = NativeAsset; // <- should be enough to allow teleportation of KSM
-	type LocationInverter = LocationInverter<Ancestry>;
+	type UniversalLocation = UniversalLocation;
 	type Barrier = Barrier;
 	type Weigher = WeightInfoBounds<
 		crate::weights::xcm::StatemineXcmWeight<RuntimeCall>,
@@ -184,7 +187,7 @@ impl xcm_executor::Config for XcmConfig {
 				WeightToFee,
 				pallet_assets::BalanceToAssetBalance<Balances, Runtime, ConvertInto>,
 			>,
-			ConvertedConcreteAssetId<
+			ConvertedConcreteId<
 				AssetId,
 				Balance,
 				AsPrefixedGeneralIndex<AssetsPalletLocation, AssetId, JustTry>,
@@ -202,6 +205,14 @@ impl xcm_executor::Config for XcmConfig {
 	type AssetTrap = PolkadotXcm;
 	type AssetClaims = PolkadotXcm;
 	type SubscriptionService = PolkadotXcm;
+	type PalletInstancesInfo = ();
+	type MaxAssetsIntoHolding = MaxAssetsIntoHolding;
+	type AssetLocker = ();
+	type AssetExchanger = ();
+	type FeeManager = ();
+	type MessageExporter = ();
+	type UniversalAliases = Nothing;
+	type CallDispatcher = RuntimeCall;
 }
 
 /// Converts a local signed origin into an XCM multilocation.
@@ -212,7 +223,7 @@ pub type LocalOriginToLocation = SignedToAccountId32<RuntimeOrigin, AccountId, R
 /// queues.
 pub type XcmRouter = (
 	// Two routers - use UMP to communicate with the relay chain:
-	cumulus_primitives_utility::ParentAsUmp<ParachainSystem, PolkadotXcm>,
+	cumulus_primitives_utility::ParentAsUmp<ParachainSystem, PolkadotXcm, ()>,
 	// ..and XCMP to communicate with the sibling chains.
 	XcmpQueue,
 );
@@ -235,11 +246,16 @@ impl pallet_xcm::Config for Runtime {
 		MaxInstructions,
 	>;
 
-	type LocationInverter = LocationInverter<Ancestry>;
+	type UniversalLocation = UniversalLocation;
 	type RuntimeOrigin = RuntimeOrigin;
 	type RuntimeCall = RuntimeCall;
 	const VERSION_DISCOVERY_QUEUE_SIZE: u32 = 100;
 	type AdvertisedXcmVersion = pallet_xcm::CurrentXcmVersion;
+	type Currency = Balances;
+	type CurrencyMatcher = ();
+	type TrustedLockers = ();
+	type SovereignAccountOf = LocationToAccountId;
+	type MaxLockers = ConstU32<8>;
 }
 
 impl cumulus_pallet_xcm::Config for Runtime {

@@ -44,17 +44,21 @@ use cumulus_primitives_core::{
 	ParaId, XcmpMessageFormat, XcmpMessageHandler, XcmpMessageSource,
 };
 use frame_support::{
-	traits::EnsureOrigin,
+	traits::{EnsureOrigin, Get},
 	weights::{constants::WEIGHT_PER_MILLIS, Weight},
 };
+use polkadot_runtime_common::xcm_sender::ConstantPrice;
 use rand_chacha::{
 	rand_core::{RngCore, SeedableRng},
 	ChaChaRng,
 };
 use scale_info::TypeInfo;
-use sp_runtime::{traits::Hash, RuntimeDebug};
+use sp_runtime::RuntimeDebug;
 use sp_std::{convert::TryFrom, prelude::*};
-use xcm::{latest::prelude::*, VersionedXcm, WrapVersion, MAX_XCM_DECODE_DEPTH};
+use xcm::{
+	latest::{prelude::*, Weight as XCMWeight},
+	VersionedXcm, WrapVersion, MAX_XCM_DECODE_DEPTH,
+};
 use xcm_executor::traits::ConvertOrigin;
 
 pub use pallet::*;
@@ -99,6 +103,9 @@ pub mod pallet {
 		/// superuser origin.
 		type ControllerOriginConverter: ConvertOrigin<Self::RuntimeOrigin>;
 
+		/// The price for delivering an XCM to a sibling parachain destination.
+		type PriceForSiblingDelivery: PriceForSiblingDelivery;
+
 		/// The weight information of this pallet.
 		type WeightInfo: WeightInfo;
 	}
@@ -130,11 +137,11 @@ pub mod pallet {
 		///
 		/// Events:
 		/// - `OverweightServiced`: On success.
-		#[pallet::weight((weight_limit.saturating_add(Weight::from_ref_time(1_000_000)), DispatchClass::Operational,))]
+		#[pallet::weight((Weight::from_ref_time(weight_limit.saturating_add(1_000_000)), DispatchClass::Operational,))]
 		pub fn service_overweight(
 			origin: OriginFor<T>,
 			index: OverweightIndex,
-			weight_limit: Weight,
+			weight_limit: XCMWeight,
 		) -> DispatchResultWithPostInfo {
 			T::ExecuteOverweightOrigin::ensure_origin(origin)?;
 
@@ -145,8 +152,9 @@ pub mod pallet {
 				&mut data.as_slice(),
 			)
 			.map_err(|_| Error::<T>::BadXcm)?;
-			let used = Self::handle_xcm_message(sender, sent_at, xcm, weight_limit)
-				.map_err(|_| Error::<T>::WeightOverLimit)?;
+			let used =
+				Self::handle_xcm_message(sender, sent_at, xcm, Weight::from_ref_time(weight_limit))
+					.map_err(|_| Error::<T>::WeightOverLimit)?;
 			Overweight::<T>::remove(index);
 			Self::deposit_event(Event::OverweightServiced { index, used });
 			Ok(Some(used.saturating_add(Weight::from_ref_time(1_000_000))).into())
@@ -222,9 +230,9 @@ pub mod pallet {
 		/// - `origin`: Must pass `Root`.
 		/// - `new`: Desired value for `QueueConfigData.threshold_weight`
 		#[pallet::weight((T::WeightInfo::set_config_with_weight(), DispatchClass::Operational,))]
-		pub fn update_threshold_weight(origin: OriginFor<T>, new: Weight) -> DispatchResult {
+		pub fn update_threshold_weight(origin: OriginFor<T>, new: XCMWeight) -> DispatchResult {
 			ensure_root(origin)?;
-			QueueConfig::<T>::mutate(|data| data.threshold_weight = new);
+			QueueConfig::<T>::mutate(|data| data.threshold_weight = Weight::from_ref_time(new));
 
 			Ok(())
 		}
@@ -235,9 +243,14 @@ pub mod pallet {
 		/// - `origin`: Must pass `Root`.
 		/// - `new`: Desired value for `QueueConfigData.weight_restrict_decay`.
 		#[pallet::weight((T::WeightInfo::set_config_with_weight(), DispatchClass::Operational,))]
-		pub fn update_weight_restrict_decay(origin: OriginFor<T>, new: Weight) -> DispatchResult {
+		pub fn update_weight_restrict_decay(
+			origin: OriginFor<T>,
+			new: XCMWeight,
+		) -> DispatchResult {
 			ensure_root(origin)?;
-			QueueConfig::<T>::mutate(|data| data.weight_restrict_decay = new);
+			QueueConfig::<T>::mutate(|data| {
+				data.weight_restrict_decay = Weight::from_ref_time(new)
+			});
 
 			Ok(())
 		}
@@ -250,10 +263,12 @@ pub mod pallet {
 		#[pallet::weight((T::WeightInfo::set_config_with_weight(), DispatchClass::Operational,))]
 		pub fn update_xcmp_max_individual_weight(
 			origin: OriginFor<T>,
-			new: Weight,
+			new: XCMWeight,
 		) -> DispatchResult {
 			ensure_root(origin)?;
-			QueueConfig::<T>::mutate(|data| data.xcmp_max_individual_weight = new);
+			QueueConfig::<T>::mutate(|data| {
+				data.xcmp_max_individual_weight = Weight::from_ref_time(new)
+			});
 
 			Ok(())
 		}
@@ -263,17 +278,17 @@ pub mod pallet {
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
 		/// Some XCM was executed ok.
-		Success { message_hash: Option<T::Hash>, weight: Weight },
+		Success { message_hash: Option<XcmHash>, weight: Weight },
 		/// Some XCM failed.
-		Fail { message_hash: Option<T::Hash>, error: XcmError, weight: Weight },
+		Fail { message_hash: Option<XcmHash>, error: XcmError, weight: Weight },
 		/// Bad XCM version used.
-		BadVersion { message_hash: Option<T::Hash> },
+		BadVersion { message_hash: Option<XcmHash> },
 		/// Bad XCM format used.
-		BadFormat { message_hash: Option<T::Hash> },
+		BadFormat { message_hash: Option<XcmHash> },
 		/// An upward message was sent to the relay chain.
-		UpwardMessageSent { message_hash: Option<T::Hash> },
+		UpwardMessageSent { message_hash: Option<XcmHash> },
 		/// An HRMP message was sent to a sibling parachain.
-		XcmpMessageSent { message_hash: Option<T::Hash> },
+		XcmpMessageSent { message_hash: Option<XcmHash> },
 		/// An XCM exceeded the individual message weight budget.
 		OverweightEnqueued {
 			sender: ParaId,
@@ -599,13 +614,13 @@ impl<T: Config> Pallet<T> {
 		xcm: VersionedXcm<T::RuntimeCall>,
 		max_weight: Weight,
 	) -> Result<Weight, XcmError> {
-		let hash = Encode::using_encoded(&xcm, T::Hashing::hash);
+		let hash = xcm.using_encoded(sp_io::hashing::blake2_256);
 		log::debug!("Processing XCMP-XCM: {:?}", &hash);
 		let (result, event) = match Xcm::<T::RuntimeCall>::try_from(xcm) {
 			Ok(xcm) => {
-				let location = (1, Parachain(sender.into()));
+				let location = (Parent, Parachain(sender.into()));
 
-				match T::XcmExecutor::execute_xcm(location, xcm, max_weight.ref_time()) {
+				match T::XcmExecutor::execute_xcm(location, xcm, hash, max_weight.ref_time()) {
 					Outcome::Error(e) => (
 						Err(e),
 						Event::Fail { message_hash: Some(hash), error: e, weight: Weight::zero() },
@@ -813,7 +828,7 @@ impl<T: Config> Pallet<T> {
 			let index = shuffled[shuffle_index];
 			let sender = status[index].sender;
 			let sender_origin = T::ControllerOriginConverter::convert_origin(
-				(1, Parachain(sender.into())),
+				(Parent, Parachain(sender.into())),
 				OriginKind::Superuser,
 			);
 			let is_controller = sender_origin
@@ -1109,28 +1124,59 @@ impl<T: Config> XcmpMessageSource for Pallet<T> {
 	}
 }
 
+pub trait PriceForSiblingDelivery {
+	fn price_for_sibling_delivery(id: ParaId, message: &Xcm<()>) -> MultiAssets;
+}
+
+impl PriceForSiblingDelivery for () {
+	fn price_for_sibling_delivery(_: ParaId, _: &Xcm<()>) -> MultiAssets {
+		MultiAssets::new()
+	}
+}
+
+impl<T: Get<MultiAssets>> PriceForSiblingDelivery for ConstantPrice<T> {
+	fn price_for_sibling_delivery(_: ParaId, _: &Xcm<()>) -> MultiAssets {
+		T::get()
+	}
+}
+
 /// Xcm sender for sending to a sibling parachain.
 impl<T: Config> SendXcm for Pallet<T> {
-	fn send_xcm(dest: impl Into<MultiLocation>, msg: Xcm<()>) -> Result<(), SendError> {
-		let dest = dest.into();
+	type Ticket = (ParaId, VersionedXcm<()>);
 
-		match &dest {
+	fn validate(
+		dest: &mut Option<MultiLocation>,
+		msg: &mut Option<Xcm<()>>,
+	) -> SendResult<(ParaId, VersionedXcm<()>)> {
+		let d = dest.take().ok_or(SendError::MissingArgument)?;
+		let xcm = msg.take().ok_or(SendError::MissingArgument)?;
+
+		match &d {
 			// An HRMP message for a sibling parachain.
 			MultiLocation { parents: 1, interior: X1(Parachain(id)) } => {
-				let versioned_xcm = T::VersionWrapper::wrap_version(&dest, msg)
+				let id = ParaId::from(*id);
+				let price = T::PriceForSiblingDelivery::price_for_sibling_delivery(id, &xcm);
+				let versioned_xcm = T::VersionWrapper::wrap_version(&d, xcm)
 					.map_err(|()| SendError::DestinationUnsupported)?;
-				let hash = T::Hashing::hash_of(&versioned_xcm);
-				Self::send_fragment(
-					(*id).into(),
-					XcmpMessageFormat::ConcatenatedVersionedXcm,
-					versioned_xcm,
-				)
-				.map_err(|e| SendError::Transport(<&'static str>::from(e)))?;
-				Self::deposit_event(Event::XcmpMessageSent { message_hash: Some(hash) });
-				Ok(())
+				Ok(((id, versioned_xcm), price))
 			},
 			// Anything else is unhandled. This includes a message this is meant for us.
-			_ => Err(SendError::CannotReachDestination(dest, msg)),
+			_ => {
+				*dest = Some(d);
+				Err(SendError::NotApplicable)
+			},
+		}
+	}
+
+	fn deliver((id, xcm): (ParaId, VersionedXcm<()>)) -> Result<XcmHash, SendError> {
+		let hash = xcm.using_encoded(sp_io::hashing::blake2_256);
+
+		match Self::send_fragment(id, XcmpMessageFormat::ConcatenatedVersionedXcm, xcm) {
+			Ok(_) => {
+				Self::deposit_event(Event::XcmpMessageSent { message_hash: Some(hash) });
+				Ok(hash)
+			},
+			Err(e) => Err(SendError::Transport(<&'static str>::from(e))),
 		}
 	}
 }

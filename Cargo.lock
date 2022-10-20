@@ -1883,6 +1883,7 @@ dependencies = [
  "log",
  "pallet-balances",
  "parity-scale-codec",
+ "polkadot-runtime-common",
  "rand_chacha 0.3.1",
  "scale-info",
  "sp-core",
@@ -1904,7 +1905,6 @@ dependencies = [
  "frame-system",
  "parity-scale-codec",
  "scale-info",
- "serde",
  "sp-runtime",
  "sp-std",
  "xcm",
@@ -1975,6 +1975,8 @@ dependencies = [
  "polkadot-core-primitives",
  "polkadot-parachain 0.9.30",
  "polkadot-primitives",
+ "polkadot-runtime-common",
+ "sp-io",
  "sp-runtime",
  "sp-std",
  "sp-trie",
@@ -3926,7 +3928,7 @@ checksum = "67c21572b4949434e4fc1e1978b99c5f77064153c59d998bf13ecd96fb5ecba7"
 [[package]]
 name = "kusama-runtime"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "beefy-primitives",
  "bitvec",
@@ -3949,6 +3951,7 @@ dependencies = [
  "pallet-bounties",
  "pallet-child-bounties",
  "pallet-collective",
+ "pallet-conviction-voting",
  "pallet-democracy",
  "pallet-election-provider-multi-phase",
  "pallet-election-provider-support-benchmarking",
@@ -3968,7 +3971,9 @@ dependencies = [
  "pallet-offences-benchmarking",
  "pallet-preimage",
  "pallet-proxy",
+ "pallet-ranked-collective",
  "pallet-recovery",
+ "pallet-referenda",
  "pallet-scheduler",
  "pallet-session",
  "pallet-session-benchmarking",
@@ -3982,6 +3987,7 @@ dependencies = [
  "pallet-treasury",
  "pallet-utility",
  "pallet-vesting",
+ "pallet-whitelist",
  "pallet-xcm",
  "pallet-xcm-benchmarks",
  "parity-scale-codec",
@@ -4020,7 +4026,7 @@ dependencies = [
 [[package]]
 name = "kusama-runtime-constants"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "frame-support",
  "polkadot-primitives",
@@ -5359,7 +5365,7 @@ checksum = "28988d872ab76095a6e6ac88d99b54fd267702734fd7ffe610ca27f533ddb95a"
 [[package]]
 name = "orchestra"
 version = "0.0.1"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "async-trait",
  "dyn-clonable",
@@ -5375,7 +5381,7 @@ dependencies = [
 [[package]]
 name = "orchestra-proc-macro"
 version = "0.0.1"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "expander 0.0.6",
  "itertools",
@@ -5771,6 +5777,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "pallet-conviction-voting"
+version = "4.0.0-dev"
+source = "git+https://github.com/paritytech/substrate?branch=polkadot-v0.9.30#a3ed0119c45cdd0d571ad34e5b3ee7518c8cef8d"
+dependencies = [
+ "assert_matches",
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
+]
+
+[[package]]
 name = "pallet-democracy"
 version = "4.0.0-dev"
 source = "git+https://github.com/paritytech/substrate?branch=polkadot-v0.9.30#a3ed0119c45cdd0d571ad34e5b3ee7518c8cef8d"
@@ -6151,6 +6174,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "pallet-ranked-collective"
+version = "4.0.0-dev"
+source = "git+https://github.com/paritytech/substrate?branch=polkadot-v0.9.30#a3ed0119c45cdd0d571ad34e5b3ee7518c8cef8d"
+dependencies = [
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "sp-arithmetic",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
+]
+
+[[package]]
 name = "pallet-recovery"
 version = "4.0.0-dev"
 source = "git+https://github.com/paritytech/substrate?branch=polkadot-v0.9.30#a3ed0119c45cdd0d571ad34e5b3ee7518c8cef8d"
@@ -6160,6 +6201,24 @@ dependencies = [
  "frame-system",
  "parity-scale-codec",
  "scale-info",
+ "sp-io",
+ "sp-runtime",
+ "sp-std",
+]
+
+[[package]]
+name = "pallet-referenda"
+version = "4.0.0-dev"
+source = "git+https://github.com/paritytech/substrate?branch=polkadot-v0.9.30#a3ed0119c45cdd0d571ad34e5b3ee7518c8cef8d"
+dependencies = [
+ "assert_matches",
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "parity-scale-codec",
+ "scale-info",
+ "serde",
+ "sp-arithmetic",
  "sp-io",
  "sp-runtime",
  "sp-std",
@@ -6447,9 +6506,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "pallet-whitelist"
+version = "4.0.0-dev"
+source = "git+https://github.com/paritytech/substrate?branch=polkadot-v0.9.30#a3ed0119c45cdd0d571ad34e5b3ee7518c8cef8d"
+dependencies = [
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "parity-scale-codec",
+ "scale-info",
+ "sp-api",
+ "sp-runtime",
+ "sp-std",
+]
+
+[[package]]
 name = "pallet-xcm"
-version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+version = "0.9.29"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "frame-support",
  "frame-system",
@@ -6458,6 +6532,7 @@ dependencies = [
  "scale-info",
  "serde",
  "sp-core",
+ "sp-io",
  "sp-runtime",
  "sp-std",
  "xcm",
@@ -6466,8 +6541,8 @@ dependencies = [
 
 [[package]]
 name = "pallet-xcm-benchmarks"
-version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+version = "0.9.29"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -6475,9 +6550,11 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "scale-info",
+ "sp-io",
  "sp-runtime",
  "sp-std",
  "xcm",
+ "xcm-builder",
  "xcm-executor",
 ]
 
@@ -7036,7 +7113,7 @@ dependencies = [
 [[package]]
 name = "polkadot-approval-distribution"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "futures",
  "polkadot-node-network-protocol",
@@ -7051,7 +7128,7 @@ dependencies = [
 [[package]]
 name = "polkadot-availability-bitfield-distribution"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "futures",
  "polkadot-node-network-protocol",
@@ -7065,7 +7142,7 @@ dependencies = [
 [[package]]
 name = "polkadot-availability-distribution"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "derive_more",
  "fatality",
@@ -7088,7 +7165,7 @@ dependencies = [
 [[package]]
 name = "polkadot-availability-recovery"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "fatality",
  "futures",
@@ -7109,7 +7186,7 @@ dependencies = [
 [[package]]
 name = "polkadot-cli"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "clap",
  "frame-benchmarking-cli",
@@ -7135,7 +7212,7 @@ dependencies = [
 [[package]]
 name = "polkadot-client"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "beefy-primitives",
  "frame-benchmarking",
@@ -7176,7 +7253,7 @@ dependencies = [
 [[package]]
 name = "polkadot-collator-protocol"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "always-assert",
  "fatality",
@@ -7197,7 +7274,7 @@ dependencies = [
 [[package]]
 name = "polkadot-core-primitives"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "parity-scale-codec",
  "parity-util-mem",
@@ -7210,7 +7287,7 @@ dependencies = [
 [[package]]
 name = "polkadot-dispute-distribution"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "derive_more",
  "fatality",
@@ -7233,7 +7310,7 @@ dependencies = [
 [[package]]
 name = "polkadot-erasure-coding"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "parity-scale-codec",
  "polkadot-node-primitives",
@@ -7247,7 +7324,7 @@ dependencies = [
 [[package]]
 name = "polkadot-gossip-support"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "futures",
  "futures-timer",
@@ -7267,7 +7344,7 @@ dependencies = [
 [[package]]
 name = "polkadot-network-bridge"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "always-assert",
  "async-trait",
@@ -7291,7 +7368,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-collation-generation"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "futures",
  "parity-scale-codec",
@@ -7309,7 +7386,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-core-approval-voting"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "bitvec",
  "derive_more",
@@ -7338,7 +7415,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-core-av-store"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "bitvec",
  "futures",
@@ -7358,7 +7435,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-core-backing"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "bitvec",
  "fatality",
@@ -7377,7 +7454,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-core-bitfield-signing"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "futures",
  "polkadot-node-subsystem",
@@ -7392,7 +7469,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-core-candidate-validation"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "async-trait",
  "futures",
@@ -7410,7 +7487,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-core-chain-api"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "futures",
  "polkadot-node-subsystem",
@@ -7425,7 +7502,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-core-chain-selection"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "futures",
  "futures-timer",
@@ -7442,7 +7519,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-core-dispute-coordinator"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "fatality",
  "futures",
@@ -7461,7 +7538,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-core-parachains-inherent"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "async-trait",
  "futures",
@@ -7478,7 +7555,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-core-provisioner"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "bitvec",
  "fatality",
@@ -7496,7 +7573,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-core-pvf"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "always-assert",
  "assert_matches",
@@ -7528,7 +7605,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-core-pvf-checker"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "futures",
  "polkadot-node-primitives",
@@ -7544,7 +7621,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-core-runtime-api"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "futures",
  "memory-lru",
@@ -7560,7 +7637,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-jaeger"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "async-std",
  "lazy_static",
@@ -7578,7 +7655,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-metrics"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "bs58",
  "futures",
@@ -7597,7 +7674,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-network-protocol"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "async-trait",
  "derive_more",
@@ -7620,7 +7697,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-primitives"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "bounded-vec",
  "futures",
@@ -7642,7 +7719,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-subsystem"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "polkadot-node-jaeger",
  "polkadot-node-subsystem-types",
@@ -7652,7 +7729,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-subsystem-test-helpers"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "async-trait",
  "futures",
@@ -7670,7 +7747,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-subsystem-types"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "async-trait",
  "derive_more",
@@ -7693,7 +7770,7 @@ dependencies = [
 [[package]]
 name = "polkadot-node-subsystem-util"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "async-trait",
  "derive_more",
@@ -7726,7 +7803,7 @@ dependencies = [
 [[package]]
 name = "polkadot-overseer"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "async-trait",
  "futures",
@@ -7749,7 +7826,7 @@ dependencies = [
 [[package]]
 name = "polkadot-parachain"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "derive_more",
  "frame-support",
@@ -7849,7 +7926,7 @@ dependencies = [
 [[package]]
 name = "polkadot-performance-test"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "env_logger 0.9.0",
  "kusama-runtime",
@@ -7864,7 +7941,7 @@ dependencies = [
 [[package]]
 name = "polkadot-primitives"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "bitvec",
  "frame-system",
@@ -7894,7 +7971,7 @@ dependencies = [
 [[package]]
 name = "polkadot-rpc"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "beefy-gadget",
  "beefy-gadget-rpc",
@@ -7926,7 +8003,7 @@ dependencies = [
 [[package]]
 name = "polkadot-runtime"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "beefy-primitives",
  "bitvec",
@@ -8015,7 +8092,7 @@ dependencies = [
 [[package]]
 name = "polkadot-runtime-common"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "beefy-primitives",
  "bitvec",
@@ -8062,7 +8139,7 @@ dependencies = [
 [[package]]
 name = "polkadot-runtime-constants"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "frame-support",
  "polkadot-primitives",
@@ -8074,7 +8151,7 @@ dependencies = [
 [[package]]
 name = "polkadot-runtime-metrics"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "bs58",
  "parity-scale-codec",
@@ -8086,7 +8163,7 @@ dependencies = [
 [[package]]
 name = "polkadot-runtime-parachains"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "bitflags",
  "bitvec",
@@ -8129,7 +8206,7 @@ dependencies = [
 [[package]]
 name = "polkadot-service"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "async-trait",
  "beefy-gadget",
@@ -8234,7 +8311,7 @@ dependencies = [
 [[package]]
 name = "polkadot-statement-distribution"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "arrayvec 0.5.2",
  "fatality",
@@ -8255,7 +8332,7 @@ dependencies = [
 [[package]]
 name = "polkadot-statement-table"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "parity-scale-codec",
  "polkadot-primitives",
@@ -8265,7 +8342,7 @@ dependencies = [
 [[package]]
 name = "polkadot-test-client"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "parity-scale-codec",
  "polkadot-node-subsystem",
@@ -8290,7 +8367,7 @@ dependencies = [
 [[package]]
 name = "polkadot-test-runtime"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "beefy-primitives",
  "bitvec",
@@ -8351,7 +8428,7 @@ dependencies = [
 [[package]]
 name = "polkadot-test-service"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "frame-benchmarking",
  "frame-system",
@@ -8466,15 +8543,15 @@ dependencies = [
 
 [[package]]
 name = "predicates-core"
-version = "1.0.2"
+version = "1.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "57e35a3326b75e49aa85f5dc6ec15b41108cf5aee58eabb1f274dd18b73c2451"
+checksum = "da1c2388b1513e1b605fcec39a95e0a9e8ef088f71443ef37099fa9ae6673fcb"
 
 [[package]]
 name = "predicates-tree"
-version = "1.0.4"
+version = "1.0.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "338c7be2905b732ae3984a2f40032b5e94fd8f52505b186c7d4d68d193445df7"
+checksum = "4d86de6de25020a36c6d3643a86d9a6a9f552107c0559c60ea03551b5e16c032"
 dependencies = [
  "predicates-core",
  "termtree",
@@ -8496,7 +8573,7 @@ dependencies = [
 [[package]]
 name = "prioritized-metered-channel"
 version = "0.2.0"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "coarsetime",
  "crossbeam-queue",
@@ -9103,7 +9180,7 @@ dependencies = [
 [[package]]
 name = "rococo-runtime"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "beefy-merkle-tree",
  "beefy-primitives",
@@ -9187,7 +9264,7 @@ dependencies = [
 [[package]]
 name = "rococo-runtime-constants"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "frame-support",
  "polkadot-primitives",
@@ -10837,7 +10914,7 @@ checksum = "03b634d87b960ab1a38c4fe143b508576f075e7c978bfad18217645ebfdfa2ec"
 [[package]]
 name = "slot-range-helper"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "enumn",
  "parity-scale-codec",
@@ -12152,14 +12229,14 @@ dependencies = [
 
 [[package]]
 name = "termtree"
-version = "0.2.3"
+version = "0.2.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "13a4ec180a2de59b57434704ccfad967f789b12737738798fa08798cd5824c16"
+checksum = "507e9898683b6c43a9aa55b64259b721b52ba226e0f3779137e50ad114a4c90b"
 
 [[package]]
 name = "test-runtime-constants"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "frame-support",
  "polkadot-primitives",
@@ -12440,7 +12517,7 @@ dependencies = [
 [[package]]
 name = "tracing-gum"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "polkadot-node-jaeger",
  "polkadot-primitives",
@@ -12451,7 +12528,7 @@ dependencies = [
 [[package]]
 name = "tracing-gum-proc-macro"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "expander 0.0.6",
  "proc-macro-crate",
@@ -13166,7 +13243,7 @@ dependencies = [
 [[package]]
 name = "westend-runtime"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "beefy-primitives",
  "bitvec",
@@ -13256,7 +13333,7 @@ dependencies = [
 [[package]]
 name = "westend-runtime-constants"
 version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "frame-support",
  "polkadot-primitives",
@@ -13541,25 +13618,28 @@ dependencies = [
 
 [[package]]
 name = "xcm"
-version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+version = "0.9.29"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "derivative",
  "impl-trait-for-tuples",
  "log",
  "parity-scale-codec",
  "scale-info",
+ "serde",
+ "sp-io",
  "sp-runtime",
  "xcm-procedural",
 ]
 
 [[package]]
 name = "xcm-builder"
-version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+version = "0.9.29"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "frame-support",
  "frame-system",
+ "impl-trait-for-tuples",
  "log",
  "pallet-transaction-payment",
  "parity-scale-codec",
@@ -13575,8 +13655,8 @@ dependencies = [
 
 [[package]]
 name = "xcm-executor"
-version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+version = "0.9.29"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "frame-benchmarking",
  "frame-support",
@@ -13593,8 +13673,8 @@ dependencies = [
 
 [[package]]
 name = "xcm-procedural"
-version = "0.9.30"
-source = "git+https://github.com/paritytech/polkadot?branch=release-v0.9.30#064536093f5ff70d867f4bbce8d4c41a406d317a"
+version = "0.9.29"
+source = "git+https://github.com/arturgontijo/polkadot?branch=trappist-xcm-v3#ca7eb1d45fb42b35c3faacccf07f722ae21d8a7b"
 dependencies = [
  "Inflector",
  "proc-macro2",

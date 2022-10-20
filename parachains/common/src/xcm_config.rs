@@ -5,9 +5,8 @@ use frame_support::{
 	traits::{fungibles::Inspect, tokens::BalanceConversion},
 	weights::{Weight, WeightToFee, WeightToFeePolynomial},
 };
-use sp_runtime::traits::Get;
-use xcm::latest::{prelude::*, Weight as XCMWeight};
-use xcm_executor::traits::{FilterAssetLocation, ShouldExecute};
+use xcm::latest::{prelude::*, Weight as XCMWeight, Instruction};
+use xcm_executor::traits::ShouldExecute;
 
 //TODO: move DenyThenTry to polkadot's xcm module.
 /// Deny executing the XCM if it matches any of the Deny filter regardless of anything else.
@@ -24,12 +23,12 @@ where
 {
 	fn should_execute<RuntimeCall>(
 		origin: &MultiLocation,
-		message: &mut Xcm<RuntimeCall>,
+		instructions: &mut [Instruction<RuntimeCall>],
 		max_weight: XCMWeight,
 		weight_credit: &mut XCMWeight,
 	) -> Result<(), ()> {
-		Deny::should_execute(origin, message, max_weight, weight_credit)?;
-		Allow::should_execute(origin, message, max_weight, weight_credit)
+		Deny::should_execute(origin, instructions, max_weight, weight_credit)?;
+		Allow::should_execute(origin, instructions, max_weight, weight_credit)
 	}
 }
 
@@ -38,11 +37,11 @@ pub struct DenyReserveTransferToRelayChain;
 impl ShouldExecute for DenyReserveTransferToRelayChain {
 	fn should_execute<RuntimeCall>(
 		origin: &MultiLocation,
-		message: &mut Xcm<RuntimeCall>,
+		instructions: &mut [Instruction<RuntimeCall>],
 		_max_weight: XCMWeight,
 		_weight_credit: &mut XCMWeight,
 	) -> Result<(), ()> {
-		if message.0.iter().any(|inst| {
+		if instructions.iter().any(|inst| {
 			matches!(
 				inst,
 				InitiateReserveWithdraw {
@@ -61,7 +60,7 @@ impl ShouldExecute for DenyReserveTransferToRelayChain {
 		// An unexpected reserve transfer has arrived from the Relay Chain. Generally, `IsReserve`
 		// should not allow this, but we just log it here.
 		if matches!(origin, MultiLocation { parents: 1, interior: Here }) &&
-			message.0.iter().any(|inst| matches!(inst, ReserveAssetDeposited { .. }))
+			instructions.iter().any(|inst| matches!(inst, ReserveAssetDeposited { .. }))
 		{
 			log::warn!(
 				target: "xcm::barrier",
@@ -106,16 +105,5 @@ where
 		let asset_amount = BalanceConverter::to_asset_balance(amount, asset_id)
 			.map_err(|_| XcmError::TooExpensive)?;
 		Ok(asset_amount)
-	}
-}
-
-/// Accepts an asset if it is a native asset from a particular `MultiLocation`.
-pub struct ConcreteNativeAssetFrom<Location>(PhantomData<Location>);
-impl<Location: Get<MultiLocation>> FilterAssetLocation for ConcreteNativeAssetFrom<Location> {
-	fn filter_asset_location(asset: &MultiAsset, origin: &MultiLocation) -> bool {
-		log::trace!(target: "xcm::filter_asset_location",
-			"ConcreteNativeAsset asset: {:?}, origin: {:?}, location: {:?}",
-			asset, origin, Location::get());
-		matches!(asset.id, Concrete(ref id) if id == origin && origin == &Location::get())
 	}
 }

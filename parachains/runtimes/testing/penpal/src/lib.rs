@@ -35,7 +35,7 @@ use frame_support::{
 	construct_runtime,
 	dispatch::DispatchClass,
 	parameter_types,
-	traits::Everything,
+	traits::{AsEnsureOriginWithArg, Everything, EitherOfDiverse},
 	weights::{
 		constants::WEIGHT_PER_SECOND, ConstantMultiplier, Weight, WeightToFeeCoefficient,
 		WeightToFeeCoefficients, WeightToFeePolynomial,
@@ -44,7 +44,7 @@ use frame_support::{
 };
 use frame_system::{
 	limits::{BlockLength, BlockWeights},
-	EnsureRoot,
+	EnsureRoot, EnsureSigned,
 };
 use smallvec::smallvec;
 use sp_api::impl_runtime_apis;
@@ -61,7 +61,7 @@ use sp_std::prelude::*;
 #[cfg(feature = "std")]
 use sp_version::NativeVersion;
 use sp_version::RuntimeVersion;
-use xcm_config::{AssetsToBlockAuthor, XcmConfig, XcmOriginToTransactDispatchOrigin};
+use xcm_config::{AssetsToBlockAuthor, XcmConfig, XcmOriginToTransactDispatchOrigin, RelayLocation};
 
 #[cfg(any(feature = "std", test))]
 pub use sp_runtime::BuildStorage;
@@ -75,6 +75,7 @@ use weights::{BlockExecutionWeight, ExtrinsicBaseWeight, RocksDbWeight};
 use parachains_common::{AccountId, Signature};
 use xcm::latest::prelude::BodyId;
 use xcm_executor::XcmExecutor;
+use pallet_xcm::{EnsureXcm, IsMajorityOfBody};
 
 /// Balance of an account.
 pub type Balance = u128;
@@ -409,6 +410,47 @@ impl pallet_assets::Config for Runtime {
 }
 
 parameter_types! {
+	pub const UnitBody: BodyId = BodyId::Unit;
+}
+
+pub type AssetsForceOrigin = EitherOfDiverse<
+	EnsureRoot<AccountId>,
+	EnsureXcm<IsMajorityOfBody<RelayLocation, UnitBody>>
+>;
+
+parameter_types! {
+	pub const UniquesMetadataDepositBase: Balance = 100 * UNIT;
+	pub const AttributeDepositBase: Balance = 10 * UNIT;
+	pub const DepositPerByte: Balance = 10 * UNIT;
+	pub const CollectionDeposit: Balance = 100 * UNIT;
+	pub const ItemDeposit: Balance = 1 * UNIT;
+	pub const StringLimit: u32 = 50;
+	pub const KeyLimit: u32 = 32;
+	pub const ValueLimit: u32 = 256;
+}
+
+impl pallet_uniques::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type CollectionId = u32;
+	type ItemId = u32;
+	type Currency = Balances;
+	type ForceOrigin = AssetsForceOrigin;
+	type CollectionDeposit = CollectionDeposit;
+	type ItemDeposit = ItemDeposit;
+	type MetadataDepositBase = UniquesMetadataDepositBase;
+	type AttributeDepositBase = AttributeDepositBase;
+	type DepositPerByte = DepositPerByte;
+	type StringLimit = StringLimit;
+	type KeyLimit = KeyLimit;
+	type ValueLimit = ValueLimit;
+	type WeightInfo = pallet_uniques::weights::SubstrateWeight<Runtime>;
+	#[cfg(feature = "runtime-benchmarks")]
+	type Helper = ();
+	type CreateOrigin = AsEnsureOriginWithArg<EnsureSigned<AccountId>>;
+	type Locker = ();
+}
+
+parameter_types! {
 	pub const ReservedXcmpWeight: Weight = MAXIMUM_BLOCK_WEIGHT.saturating_div(4);
 	pub const ReservedDmpWeight: Weight = MAXIMUM_BLOCK_WEIGHT.saturating_div(4);
 }
@@ -550,6 +592,7 @@ construct_runtime!(
 
 		// The main stage.
 		Assets: pallet_assets::{Pallet, Call, Storage, Event<T>} = 50,
+		Uniques: pallet_uniques::{Pallet, Call, Storage, Event<T>} = 51,
 
 		Sudo: pallet_sudo::{Pallet, Call, Storage, Event<T>, Config<T>} = 255,
 	}

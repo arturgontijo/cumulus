@@ -22,9 +22,9 @@
 //! with statemine as the reserve. At present no derivative tokens are minted on receipt of a
 //! ReserveAssetTransferDeposited message but that will but the intension will be to support this soon.
 use super::{
-	AccountId, AssetId as AssetIdPalletAssets, Assets, Balance, Balances, ParachainInfo,
-	ParachainSystem, PolkadotXcm, Runtime, RuntimeCall, RuntimeEvent, RuntimeOrigin, WeightToFee,
-	XcmpQueue,
+	AccountId, AllPalletsWithSystem, AssetId as AssetIdPalletAssets, Assets, Balance, Balances,
+	ParachainInfo, ParachainSystem, PolkadotXcm, Runtime, RuntimeCall, RuntimeEvent, RuntimeOrigin,
+	WeightToFee, XcmpQueue, Uniques,
 };
 use core::marker::PhantomData;
 use frame_support::{
@@ -47,6 +47,7 @@ use xcm_builder::{
 	FungiblesAdapter, IsConcrete, MintLocation, NativeAsset, ParentIsPreset, RelayChainAsNative,
 	SiblingParachainAsNative, SiblingParachainConvertsVia, SignedAccountId32AsNative,
 	SignedToAccountId32, SovereignSignedViaLocation, TakeWeightCredit, UsingComponents,
+	NonFungiblesAdapter, NoChecking,
 };
 use xcm_executor::{
 	traits::{JustTry, ShouldExecute},
@@ -108,8 +109,22 @@ pub type FungiblesTransactor = FungiblesAdapter<
 	CheckingAccount,
 >;
 
+pub type NonFungiblesTransactor = NonFungiblesAdapter<
+	Uniques,
+	ConvertedConcreteId<
+		u32,
+		u32,
+		AsPrefixedGeneralIndex<(), u32, JustTry>,
+		JustTry,
+	>,
+	LocationToAccountId,
+	AccountId,
+	NoChecking,
+	(),
+>;
+
 /// Means for transacting assets on this chain.
-pub type AssetTransactors = (CurrencyTransactor, FungiblesTransactor);
+pub type AssetTransactors = (CurrencyTransactor, FungiblesTransactor, NonFungiblesTransactor);
 
 /// This is the type we use to convert an (incoming) XCM origin into a local `Origin` instance,
 /// ready for dispatching a transaction with Xcm's `Transact`. There is an `OriginKind` which can
@@ -347,7 +362,7 @@ impl xcm_executor::Config for XcmConfig {
 	type IsReserve = MultiNativeAsset; // TODO: maybe needed to be replaced by Reserves
 	type IsTeleporter = NativeAsset;
 	type UniversalLocation = UniversalLocation;
-	type Barrier = Barrier;
+	type Barrier = AllowUnpaidExecutionFrom<Everything>;  // TODO: FIXME
 	type Weigher = FixedWeightBounds<UnitWeightCost, RuntimeCall, MaxInstructions>;
 	type Trader =
 		UsingComponents<WeightToFee, RelayLocation, AccountId, Balances, ToAuthor<Runtime>>;
@@ -357,7 +372,7 @@ impl xcm_executor::Config for XcmConfig {
 	type AssetExchanger = ();
 	type AssetClaims = PolkadotXcm;
 	type SubscriptionService = PolkadotXcm;
-	type PalletInstancesInfo = ();
+	type PalletInstancesInfo = AllPalletsWithSystem;
 	type MaxAssetsIntoHolding = MaxAssetsIntoHolding;
 	type FeeManager = ();
 	type MessageExporter = ();

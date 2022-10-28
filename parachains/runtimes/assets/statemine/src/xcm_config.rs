@@ -15,7 +15,8 @@
 
 use super::{
 	AccountId, AllPalletsWithSystem, AssetId, Assets, Authorship, Balance, Balances, ParachainInfo,
-	ParachainSystem, PolkadotXcm, Runtime, RuntimeCall, RuntimeEvent, RuntimeOrigin, WeightToFee, XcmpQueue,
+	ParachainSystem, PolkadotXcm, Runtime, RuntimeCall, RuntimeEvent, RuntimeOrigin, WeightToFee,
+	Uniques, XcmpQueue,
 };
 use frame_support::{
 	match_types, parameter_types,
@@ -38,7 +39,7 @@ use xcm_builder::{
 	IsConcrete, NativeAsset, ParentAsSuperuser, ParentIsPreset, RelayChainAsNative,
 	SiblingParachainAsNative, SiblingParachainConvertsVia, SignedAccountId32AsNative,
 	SignedToAccountId32, SovereignSignedViaLocation, TakeWeightCredit, UsingComponents,
-	FixedWeightBounds,
+	FixedWeightBounds, NonFungiblesAdapter, NoChecking,
 };
 use xcm_executor::{traits::JustTry, XcmExecutor};
 
@@ -100,8 +101,23 @@ pub type FungiblesTransactor = FungiblesAdapter<
 	// The account to use for tracking teleports.
 	CheckingAccount,
 >;
+
+pub type NonFungiblesTransactor = NonFungiblesAdapter<
+	Uniques,
+	ConvertedConcreteId<
+		u32,
+		u32,
+		AsPrefixedGeneralIndex<(), u32, JustTry>,
+		JustTry,
+	>,
+	LocationToAccountId,
+	AccountId,
+	NoChecking,
+	(),
+>;
+
 /// Means for transacting assets on this chain.
-pub type AssetTransactors = (CurrencyTransactor, FungiblesTransactor);
+pub type AssetTransactors = (CurrencyTransactor, FungiblesTransactor, NonFungiblesTransactor);
 
 /// This is the type we use to convert an (incoming) XCM origin into a local `Origin` instance,
 /// ready for dispatching a transaction with Xcm's `Transact`. There is an `OriginKind` which can

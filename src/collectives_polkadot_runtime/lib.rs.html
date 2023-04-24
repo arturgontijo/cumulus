@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `parachains/runtimes/collectives/collectives-polkadot/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../collectives_polkadot_runtime/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `parachains/runtimes/collectives/collectives-polkadot/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-93196c7a1c3542a8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-4743e13df3dfe8c4.css"><link rel="stylesheet" disabled href="../../static.files/dark-0e1b889528bd466b.css"><link rel="stylesheet" disabled href="../../static.files/ayu-65289d5d067c7c66.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../collectives_polkadot_runtime/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -820,6 +820,94 @@
 <a href="#820" id="820">820</a>
 <a href="#821" id="821">821</a>
 <a href="#822" id="822">822</a>
+<a href="#823" id="823">823</a>
+<a href="#824" id="824">824</a>
+<a href="#825" id="825">825</a>
+<a href="#826" id="826">826</a>
+<a href="#827" id="827">827</a>
+<a href="#828" id="828">828</a>
+<a href="#829" id="829">829</a>
+<a href="#830" id="830">830</a>
+<a href="#831" id="831">831</a>
+<a href="#832" id="832">832</a>
+<a href="#833" id="833">833</a>
+<a href="#834" id="834">834</a>
+<a href="#835" id="835">835</a>
+<a href="#836" id="836">836</a>
+<a href="#837" id="837">837</a>
+<a href="#838" id="838">838</a>
+<a href="#839" id="839">839</a>
+<a href="#840" id="840">840</a>
+<a href="#841" id="841">841</a>
+<a href="#842" id="842">842</a>
+<a href="#843" id="843">843</a>
+<a href="#844" id="844">844</a>
+<a href="#845" id="845">845</a>
+<a href="#846" id="846">846</a>
+<a href="#847" id="847">847</a>
+<a href="#848" id="848">848</a>
+<a href="#849" id="849">849</a>
+<a href="#850" id="850">850</a>
+<a href="#851" id="851">851</a>
+<a href="#852" id="852">852</a>
+<a href="#853" id="853">853</a>
+<a href="#854" id="854">854</a>
+<a href="#855" id="855">855</a>
+<a href="#856" id="856">856</a>
+<a href="#857" id="857">857</a>
+<a href="#858" id="858">858</a>
+<a href="#859" id="859">859</a>
+<a href="#860" id="860">860</a>
+<a href="#861" id="861">861</a>
+<a href="#862" id="862">862</a>
+<a href="#863" id="863">863</a>
+<a href="#864" id="864">864</a>
+<a href="#865" id="865">865</a>
+<a href="#866" id="866">866</a>
+<a href="#867" id="867">867</a>
+<a href="#868" id="868">868</a>
+<a href="#869" id="869">869</a>
+<a href="#870" id="870">870</a>
+<a href="#871" id="871">871</a>
+<a href="#872" id="872">872</a>
+<a href="#873" id="873">873</a>
+<a href="#874" id="874">874</a>
+<a href="#875" id="875">875</a>
+<a href="#876" id="876">876</a>
+<a href="#877" id="877">877</a>
+<a href="#878" id="878">878</a>
+<a href="#879" id="879">879</a>
+<a href="#880" id="880">880</a>
+<a href="#881" id="881">881</a>
+<a href="#882" id="882">882</a>
+<a href="#883" id="883">883</a>
+<a href="#884" id="884">884</a>
+<a href="#885" id="885">885</a>
+<a href="#886" id="886">886</a>
+<a href="#887" id="887">887</a>
+<a href="#888" id="888">888</a>
+<a href="#889" id="889">889</a>
+<a href="#890" id="890">890</a>
+<a href="#891" id="891">891</a>
+<a href="#892" id="892">892</a>
+<a href="#893" id="893">893</a>
+<a href="#894" id="894">894</a>
+<a href="#895" id="895">895</a>
+<a href="#896" id="896">896</a>
+<a href="#897" id="897">897</a>
+<a href="#898" id="898">898</a>
+<a href="#899" id="899">899</a>
+<a href="#900" id="900">900</a>
+<a href="#901" id="901">901</a>
+<a href="#902" id="902">902</a>
+<a href="#903" id="903">903</a>
+<a href="#904" id="904">904</a>
+<a href="#905" id="905">905</a>
+<a href="#906" id="906">906</a>
+<a href="#907" id="907">907</a>
+<a href="#908" id="908">908</a>
+<a href="#909" id="909">909</a>
+<a href="#910" id="910">910</a>
 </pre><pre class="rust"><code><span class="comment">// Copyright (C) 2022 Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0
 
@@ -863,16 +951,22 @@
 <span class="kw">pub mod </span>impls;
 <span class="kw">mod </span>weights;
 <span class="kw">pub mod </span>xcm_config;
+<span class="comment">// Fellowship configurations.
+</span><span class="kw">pub mod </span>fellowship;
 
 <span class="kw">use </span>cumulus_pallet_parachain_system::RelayNumberStrictlyIncreases;
-<span class="kw">use </span>impls::{AllianceProposalProvider, ToParentTreasury};
+<span class="kw">use </span>fellowship::{
+	migration::import_kusama_fellowship, pallet_fellowship_origins, Fellows,
+	FellowshipCollectiveInstance,
+};
+<span class="kw">use </span>impls::{AllianceProposalProvider, EqualOrGreatestRootCmp, ToParentTreasury};
 <span class="kw">use </span>sp_api::impl_runtime_apis;
 <span class="kw">use </span>sp_core::{crypto::KeyTypeId, OpaqueMetadata};
 <span class="kw">use </span>sp_runtime::{
 	create_runtime_str, generic, impl_opaque_keys,
 	traits::{AccountIdConversion, AccountIdLookup, BlakeTwo256, Block <span class="kw">as </span>BlockT},
 	transaction_validity::{TransactionSource, TransactionValidity},
-	ApplyExtrinsicResult,
+	ApplyExtrinsicResult, Perbill,
 };
 
 <span class="kw">use </span>sp_std::prelude::<span class="kw-2">*</span>;
@@ -897,16 +991,16 @@
 <span class="kw">pub use </span>parachains_common <span class="kw">as </span>common;
 <span class="kw">use </span>parachains_common::{
 	impls::DealWithFees, opaque, AccountId, AuraId, Balance, BlockNumber, Hash, Header, Index,
-	Signature, AVERAGE_ON_INITIALIZE_RATIO, DAYS, HOURS, MAXIMUM_BLOCK_WEIGHT,
+	Signature, AVERAGE_ON_INITIALIZE_RATIO, DAYS, HOURS, MAXIMUM_BLOCK_WEIGHT, MINUTES,
 	NORMAL_DISPATCH_RATIO, SLOT_DURATION,
 };
-<span class="kw">use </span>xcm_config::{DotLocation, XcmConfig, XcmOriginToTransactDispatchOrigin};
+<span class="kw">use </span>xcm_config::{GovernanceLocation, XcmConfig, XcmOriginToTransactDispatchOrigin};
 
 <span class="attr">#[cfg(any(feature = <span class="string">&quot;std&quot;</span>, test))]
 </span><span class="kw">pub use </span>sp_runtime::BuildStorage;
 
 <span class="comment">// Polkadot imports
-</span><span class="kw">use </span>pallet_xcm::{EnsureXcm, IsMajorityOfBody};
+</span><span class="kw">use </span>pallet_xcm::{EnsureXcm, IsVoiceOfBody};
 <span class="kw">use </span>polkadot_runtime_common::{BlockHashCount, SlowAdjustingFeeUpdate};
 <span class="kw">use </span>xcm::latest::BodyId;
 <span class="kw">use </span>xcm_executor::XcmExecutor;
@@ -924,10 +1018,10 @@
 	spec_name: <span class="macro">create_runtime_str!</span>(<span class="string">&quot;collectives&quot;</span>),
 	impl_name: <span class="macro">create_runtime_str!</span>(<span class="string">&quot;collectives&quot;</span>),
 	authoring_version: <span class="number">1</span>,
-	spec_version: <span class="number">9370</span>,
+	spec_version: <span class="number">9400</span>,
 	impl_version: <span class="number">0</span>,
 	apis: RUNTIME_API_VERSIONS,
-	transaction_version: <span class="number">2</span>,
+	transaction_version: <span class="number">4</span>,
 	state_version: <span class="number">0</span>,
 };
 
@@ -937,9 +1031,6 @@
 	NativeVersion { runtime_version: VERSION, can_author_with: Default::default() }
 }
 
-<span class="doccomment">/// Privileged origin that represents Root or the majority of the Relay Chain Council.
-</span><span class="kw">pub type </span>RootOrExecutiveSimpleMajority =
-	EitherOfDiverse&lt;EnsureRoot&lt;AccountId&gt;, EnsureXcm&lt;IsMajorityOfBody&lt;DotLocation, ExecutiveBody&gt;&gt;&gt;;
 <span class="doccomment">/// Privileged origin that represents Root or more than two thirds of the Alliance.
 </span><span class="kw">pub type </span>RootOrAllianceTwoThirdsMajority = EitherOfDiverse&lt;
 	EnsureRoot&lt;AccountId&gt;,
@@ -1027,6 +1118,10 @@
 	<span class="kw">type </span>WeightInfo = weights::pallet_balances::WeightInfo&lt;Runtime&gt;;
 	<span class="kw">type </span>MaxReserves = ConstU32&lt;<span class="number">50</span>&gt;;
 	<span class="kw">type </span>ReserveIdentifier = [u8; <span class="number">8</span>];
+	<span class="kw">type </span>HoldIdentifier = ();
+	<span class="kw">type </span>FreezeIdentifier = ();
+	<span class="kw">type </span>MaxHolds = ConstU32&lt;<span class="number">0</span>&gt;;
+	<span class="kw">type </span>MaxFreezes = ConstU32&lt;<span class="number">0</span>&gt;;
 }
 
 <span class="macro">parameter_types! </span>{
@@ -1103,6 +1198,8 @@
 	</span>Collator,
 	<span class="doccomment">/// Alliance proxy. Allows calls related to the Alliance.
 	</span>Alliance,
+	<span class="doccomment">/// Fellowship proxy. Allows calls related to the Fellowship.
+	</span>Fellowship,
 }
 <span class="kw">impl </span>Default <span class="kw">for </span>ProxyType {
 	<span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
@@ -1130,6 +1227,13 @@
 				c,
 				RuntimeCall::AllianceMotion { .. } |
 					RuntimeCall::Alliance { .. } |
+					RuntimeCall::Utility { .. } |
+					RuntimeCall::Multisig { .. }
+			),
+			ProxyType::Fellowship =&gt; <span class="macro">matches!</span>(
+				c,
+				RuntimeCall::FellowshipCollective { .. } |
+					RuntimeCall::FellowshipReferenda { .. } |
 					RuntimeCall::Utility { .. } |
 					RuntimeCall::Multisig { .. }
 			),
@@ -1188,7 +1292,7 @@
 	<span class="kw">type </span>ChannelInfo = ParachainSystem;
 	<span class="kw">type </span>VersionWrapper = PolkadotXcm;
 	<span class="kw">type </span>ExecuteOverweightOrigin = EnsureRoot&lt;AccountId&gt;;
-	<span class="kw">type </span>ControllerOrigin = RootOrExecutiveSimpleMajority;
+	<span class="kw">type </span>ControllerOrigin = EitherOfDiverse&lt;EnsureRoot&lt;AccountId&gt;, Fellows&gt;;
 	<span class="kw">type </span>ControllerOriginConverter = XcmOriginToTransactDispatchOrigin;
 	<span class="kw">type </span>WeightInfo = weights::cumulus_pallet_xcmp_queue::WeightInfo&lt;Runtime&gt;;
 	<span class="kw">type </span>PriceForSiblingDelivery = ();
@@ -1226,11 +1330,15 @@
 <span class="macro">parameter_types! </span>{
 	<span class="kw">pub const </span>PotId: PalletId = PalletId(<span class="kw-2">*</span><span class="string">b&quot;PotStake&quot;</span>);
 	<span class="kw">pub const </span>SessionLength: BlockNumber = <span class="number">6 </span>* HOURS;
-	<span class="kw">pub const </span>ExecutiveBody: BodyId = BodyId::Executive;
+	<span class="comment">// `StakingAdmin` pluralistic body.
+	</span><span class="kw">pub const </span>StakingAdminBodyId: BodyId = BodyId::Defense;
 }
 
-<span class="doccomment">/// We allow root and the Relay Chain council to execute privileged collator selection operations.
-</span><span class="kw">pub type </span>CollatorSelectionUpdateOrigin = RootOrExecutiveSimpleMajority;
+<span class="doccomment">/// We allow root and the `StakingAdmin` to execute privileged collator selection operations.
+</span><span class="kw">pub type </span>CollatorSelectionUpdateOrigin = EitherOfDiverse&lt;
+	EnsureRoot&lt;AccountId&gt;,
+	EnsureXcm&lt;IsVoiceOfBody&lt;GovernanceLocation, StakingAdminBodyId&gt;&gt;,
+&gt;;
 
 <span class="kw">impl </span>pallet_collator_selection::Config <span class="kw">for </span>Runtime {
 	<span class="kw">type </span>RuntimeEvent = RuntimeEvent;
@@ -1252,6 +1360,7 @@
 
 <span class="macro">parameter_types! </span>{
 	<span class="kw">pub const </span>AllianceMotionDuration: BlockNumber = ALLIANCE_MOTION_DURATION;
+	<span class="kw">pub </span>MaxProposalWeight: Weight = Perbill::from_percent(<span class="number">50</span>) * RuntimeBlockWeights::get().max_block;
 }
 <span class="kw">pub const </span>ALLIANCE_MAX_PROPOSALS: u32 = <span class="number">100</span>;
 <span class="kw">pub const </span>ALLIANCE_MAX_MEMBERS: u32 = <span class="number">100</span>;
@@ -1265,7 +1374,9 @@
 	<span class="kw">type </span>MaxProposals = ConstU32&lt;ALLIANCE_MAX_PROPOSALS&gt;;
 	<span class="kw">type </span>MaxMembers = ConstU32&lt;ALLIANCE_MAX_MEMBERS&gt;;
 	<span class="kw">type </span>DefaultVote = pallet_collective::MoreThanMajorityThenPrimeDefaultVote;
+	<span class="kw">type </span>SetMembersOrigin = EnsureRoot&lt;AccountId&gt;;
 	<span class="kw">type </span>WeightInfo = weights::pallet_collective::WeightInfo&lt;Runtime&gt;;
+	<span class="kw">type </span>MaxProposalWeight = MaxProposalWeight;
 }
 
 <span class="kw">pub const </span>MAX_FELLOWS: u32 = ALLIANCE_MAX_MEMBERS;
@@ -1273,9 +1384,10 @@
 
 <span class="macro">parameter_types! </span>{
 	<span class="kw">pub const </span>AllyDeposit: Balance = <span class="number">1_000 </span>* UNITS; <span class="comment">// 1,000 DOT bond to join as an Ally
-	// account used to temporarily deposit slashed imbalance before teleporting
-	</span><span class="kw">pub </span>SlashedImbalanceAccId: AccountId = constants::account::SLASHED_IMBALANCE_ACC_ID.into();
-	<span class="kw">pub </span>RelayTreasuryAccId: AccountId = constants::account::RELAY_TREASURY_PALL_ID.into_account_truncating();
+	// The Alliance pallet account, used as a temporary place to deposit a slashed imbalance
+	// before the teleport to the Treasury.
+	</span><span class="kw">pub </span>AlliancePalletAccount: AccountId = constants::account::ALLIANCE_PALLET_ID.into_account_truncating();
+	<span class="kw">pub </span>RelayTreasuryAccount: AccountId = constants::account::RELAY_TREASURY_PALLET_ID.into_account_truncating();
 	<span class="comment">// The number of blocks a member must wait between giving a retirement notice and retiring.
 	// Supposed to be greater than time required to `kick_member` with alliance motion.
 	</span><span class="kw">pub const </span>AllianceRetirementPeriod: BlockNumber = (<span class="number">90 </span>* DAYS) + ALLIANCE_MOTION_DURATION;
@@ -1288,7 +1400,7 @@
 	<span class="kw">type </span>MembershipManager = RootOrAllianceTwoThirdsMajority;
 	<span class="kw">type </span>AnnouncementOrigin = RootOrAllianceTwoThirdsMajority;
 	<span class="kw">type </span>Currency = Balances;
-	<span class="kw">type </span>Slashed = ToParentTreasury&lt;RelayTreasuryAccId, SlashedImbalanceAccId, Runtime&gt;;
+	<span class="kw">type </span>Slashed = ToParentTreasury&lt;RelayTreasuryAccount, AlliancePalletAccount, Runtime&gt;;
 	<span class="kw">type </span>InitializeMembers = AllianceMotion;
 	<span class="kw">type </span>MembershipChanged = AllianceMotion;
 	<span class="kw">type </span>RetirementPeriod = AllianceRetirementPeriod;
@@ -1303,6 +1415,47 @@
 	<span class="kw">type </span>MaxMembersCount = ConstU32&lt;ALLIANCE_MAX_MEMBERS&gt;;
 	<span class="kw">type </span>AllyDeposit = AllyDeposit;
 	<span class="kw">type </span>WeightInfo = weights::pallet_alliance::WeightInfo&lt;Runtime&gt;;
+}
+
+<span class="macro">parameter_types! </span>{
+	<span class="kw">pub </span>MaximumSchedulerWeight: Weight = Perbill::from_percent(<span class="number">80</span>) * RuntimeBlockWeights::get().max_block;
+}
+
+<span class="attr">#[cfg(not(feature = <span class="string">&quot;runtime-benchmarks&quot;</span>))]
+</span><span class="macro">parameter_types! </span>{
+	<span class="kw">pub const </span>MaxScheduledPerBlock: u32 = <span class="number">50</span>;
+}
+
+<span class="attr">#[cfg(feature = <span class="string">&quot;runtime-benchmarks&quot;</span>)]
+</span><span class="macro">parameter_types! </span>{
+	<span class="kw">pub const </span>MaxScheduledPerBlock: u32 = <span class="number">200</span>;
+}
+
+<span class="kw">impl </span>pallet_scheduler::Config <span class="kw">for </span>Runtime {
+	<span class="kw">type </span>RuntimeOrigin = RuntimeOrigin;
+	<span class="kw">type </span>RuntimeEvent = RuntimeEvent;
+	<span class="kw">type </span>PalletsOrigin = OriginCaller;
+	<span class="kw">type </span>RuntimeCall = RuntimeCall;
+	<span class="kw">type </span>MaximumWeight = MaximumSchedulerWeight;
+	<span class="kw">type </span>ScheduleOrigin = EnsureRoot&lt;AccountId&gt;;
+	<span class="kw">type </span>MaxScheduledPerBlock = MaxScheduledPerBlock;
+	<span class="kw">type </span>WeightInfo = weights::pallet_scheduler::WeightInfo&lt;Runtime&gt;;
+	<span class="kw">type </span>OriginPrivilegeCmp = EqualOrGreatestRootCmp;
+	<span class="kw">type </span>Preimages = Preimage;
+}
+
+<span class="macro">parameter_types! </span>{
+	<span class="kw">pub const </span>PreimageBaseDeposit: Balance = deposit(<span class="number">2</span>, <span class="number">64</span>);
+	<span class="kw">pub const </span>PreimageByteDeposit: Balance = deposit(<span class="number">0</span>, <span class="number">1</span>);
+}
+
+<span class="kw">impl </span>pallet_preimage::Config <span class="kw">for </span>Runtime {
+	<span class="kw">type </span>WeightInfo = weights::pallet_preimage::WeightInfo&lt;Runtime&gt;;
+	<span class="kw">type </span>RuntimeEvent = RuntimeEvent;
+	<span class="kw">type </span>Currency = Balances;
+	<span class="kw">type </span>ManagerOrigin = EnsureRoot&lt;AccountId&gt;;
+	<span class="kw">type </span>BaseDeposit = PreimageBaseDeposit;
+	<span class="kw">type </span>ByteDeposit = PreimageByteDeposit;
 }
 
 <span class="comment">// Create the runtime by composing the FRAME pallets that were previously configured.
@@ -1341,10 +1494,21 @@
 		</span>Utility: pallet_utility::{Pallet, Call, Event} = <span class="number">40</span>,
 		Multisig: pallet_multisig::{Pallet, Call, Storage, Event&lt;T&gt;} = <span class="number">41</span>,
 		Proxy: pallet_proxy::{Pallet, Call, Storage, Event&lt;T&gt;} = <span class="number">42</span>,
+		Preimage: pallet_preimage::{Pallet, Call, Storage, Event&lt;T&gt;} = <span class="number">43</span>,
+		Scheduler: pallet_scheduler::{Pallet, Call, Storage, Event&lt;T&gt;} = <span class="number">44</span>,
 
 		<span class="comment">// The main stage.
+
+		// The Alliance.
 		</span>Alliance: pallet_alliance::{Pallet, Call, Storage, Event&lt;T&gt;, Config&lt;T&gt;} = <span class="number">50</span>,
 		AllianceMotion: pallet_collective::&lt;Instance1&gt;::{Pallet, Call, Storage, Origin&lt;T&gt;, Event&lt;T&gt;, Config&lt;T&gt;} = <span class="number">51</span>,
+
+		<span class="comment">// The Fellowship.
+		// pub type FellowshipCollectiveInstance = pallet_ranked_collective::Instance1;
+		</span>FellowshipCollective: pallet_ranked_collective::&lt;Instance1&gt;::{Pallet, Call, Storage, Event&lt;T&gt;} = <span class="number">60</span>,
+		<span class="comment">// pub type FellowshipReferendaInstance = pallet_referenda::Instance1;
+		</span>FellowshipReferenda: pallet_referenda::&lt;Instance1&gt;::{Pallet, Call, Storage, Event&lt;T&gt;} = <span class="number">61</span>,
+		FellowshipOrigins: pallet_fellowship_origins::{Origin} = <span class="number">62</span>,
 	}
 );
 
@@ -1373,7 +1537,7 @@
 </span><span class="kw">pub type </span>CheckedExtrinsic = generic::CheckedExtrinsic&lt;AccountId, RuntimeCall, SignedExtra&gt;;
 <span class="comment">// All migrations executed on runtime upgrade as a nested tuple of types implementing
 // `OnRuntimeUpgrade`. Included migrations must be idempotent.
-</span><span class="kw">type </span>Migrations = ();
+</span><span class="kw">type </span>Migrations = import_kusama_fellowship::Migration&lt;Runtime, FellowshipCollectiveInstance&gt;;
 
 <span class="doccomment">/// Executive: handles dispatch to the various modules.
 </span><span class="kw">pub type </span>Executive = frame_executive::Executive&lt;
@@ -1404,6 +1568,10 @@
 		[pallet_alliance, Alliance]
 		[pallet_collective, AllianceMotion]
 		[pallet_xcm, PolkadotXcm]
+		[pallet_preimage, Preimage]
+		[pallet_scheduler, Scheduler]
+		[pallet_referenda, FellowshipReferenda]
+		[pallet_ranked_collective, FellowshipCollective]
 	);
 }
 
@@ -1435,6 +1603,14 @@
 	<span class="kw">impl </span>sp_api::Metadata&lt;Block&gt; <span class="kw">for </span>Runtime {
 		<span class="kw">fn </span>metadata() -&gt; OpaqueMetadata {
 			OpaqueMetadata::new(Runtime::metadata().into())
+		}
+
+		<span class="kw">fn </span>metadata_at_version(version: u32) -&gt; <span class="prelude-ty">Option</span>&lt;OpaqueMetadata&gt; {
+			Runtime::metadata_at_version(version)
+		}
+
+		<span class="kw">fn </span>metadata_versions() -&gt; sp_std::vec::Vec&lt;u32&gt; {
+			Runtime::metadata_versions()
 		}
 	}
 
@@ -1643,4 +1819,4 @@
 	CheckInherents = CheckInherents,
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="collectives_polkadot_runtime" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0 (fc594f156 2023-01-24)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="collectives_polkadot_runtime" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.2 (9eb3afe9e 2023-03-27)" data-search-js="search-98d53477a794af0b.js" data-settings-js="settings-c3c521c753752a1a.js" data-settings-css="settings-08ddfdda51b8ee2e.css" ></div></body></html>

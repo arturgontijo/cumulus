@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `parachains/runtimes/assets/statemint/src/xcm_config.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>xcm_config.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../statemint_runtime/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `parachains/runtimes/assets/statemint/src/xcm_config.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>xcm_config.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-93196c7a1c3542a8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-4743e13df3dfe8c4.css"><link rel="stylesheet" disabled href="../../static.files/dark-0e1b889528bd466b.css"><link rel="stylesheet" disabled href="../../static.files/ayu-65289d5d067c7c66.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../statemint_runtime/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -379,16 +379,6 @@
 <a href="#379" id="379">379</a>
 <a href="#380" id="380">380</a>
 <a href="#381" id="381">381</a>
-<a href="#382" id="382">382</a>
-<a href="#383" id="383">383</a>
-<a href="#384" id="384">384</a>
-<a href="#385" id="385">385</a>
-<a href="#386" id="386">386</a>
-<a href="#387" id="387">387</a>
-<a href="#388" id="388">388</a>
-<a href="#389" id="389">389</a>
-<a href="#390" id="390">390</a>
-<a href="#391" id="391">391</a>
 </pre><pre class="rust"><code><span class="comment">// Copyright (C) 2022 Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0
 
@@ -405,14 +395,15 @@
 // limitations under the License.
 
 </span><span class="kw">use super</span>::{
-	AccountId, AllPalletsWithSystem, AssetIdForTrustBackedAssets, Assets, Authorship, Balance,
-	Balances, ParachainInfo, ParachainSystem, PolkadotXcm, Runtime, RuntimeCall, RuntimeEvent,
-	RuntimeOrigin, TrustBackedAssetsInstance, WeightToFee, XcmpQueue,
+	AccountId, AllPalletsWithSystem, Assets, Authorship, Balance, Balances, ParachainInfo,
+	ParachainSystem, PolkadotXcm, Runtime, RuntimeCall, RuntimeEvent, RuntimeOrigin,
+	TrustBackedAssetsInstance, WeightToFee, XcmpQueue,
 };
 <span class="kw">use </span>frame_support::{
 	match_types, parameter_types,
 	traits::{ConstU32, Contains, Everything, Nothing, PalletInfoAccess},
 };
+<span class="kw">use </span>frame_system::EnsureRoot;
 <span class="kw">use </span>pallet_xcm::XcmPassthrough;
 <span class="kw">use </span>parachains_common::{
 	impls::ToStakingPot,
@@ -425,17 +416,13 @@
 <span class="kw">use </span>xcm::latest::prelude::<span class="kw-2">*</span>;
 <span class="kw">use </span>xcm_builder::{
 	AccountId32Aliases, AllowExplicitUnpaidExecutionFrom, AllowKnownQueryResponses,
-	AllowSubscriptionsFrom, AllowTopLevelPaidExecutionFrom, AsPrefixedGeneralIndex,
-	ConvertedConcreteId, CurrencyAdapter, EnsureXcmOrigin, FungiblesAdapter, IsConcrete, LocalMint,
-	NativeAsset, ParentAsSuperuser, ParentIsPreset, RelayChainAsNative, SiblingParachainAsNative,
-	SiblingParachainConvertsVia, SignedAccountId32AsNative, SignedToAccountId32,
-	SovereignSignedViaLocation, TakeWeightCredit, UsingComponents, WeightInfoBounds,
-	WithComputedOrigin,
+	AllowSubscriptionsFrom, AllowTopLevelPaidExecutionFrom, CurrencyAdapter, EnsureXcmOrigin,
+	FungiblesAdapter, IsConcrete, LocalMint, NativeAsset, ParentAsSuperuser, ParentIsPreset,
+	RelayChainAsNative, SiblingParachainAsNative, SiblingParachainConvertsVia,
+	SignedAccountId32AsNative, SignedToAccountId32, SovereignSignedViaLocation, TakeWeightCredit,
+	UsingComponents, WeightInfoBounds, WithComputedOrigin,
 };
-<span class="kw">use </span>xcm_executor::{
-	traits::{JustTry, WithOriginFilter},
-	XcmExecutor,
-};
+<span class="kw">use </span>xcm_executor::{traits::WithOriginFilter, XcmExecutor};
 
 <span class="macro">parameter_types! </span>{
 	<span class="kw">pub const </span>DotLocation: MultiLocation = MultiLocation::parent();
@@ -443,10 +430,11 @@
 	<span class="kw">pub </span>RelayChainOrigin: RuntimeOrigin = cumulus_pallet_xcm::Origin::Relay.into();
 	<span class="kw">pub </span>UniversalLocation: InteriorMultiLocation =
 		X2(GlobalConsensus(RelayNetwork::get().unwrap()), Parachain(ParachainInfo::parachain_id().into()));
-	<span class="kw">pub const </span>Local: MultiLocation = MultiLocation::here();
 	<span class="kw">pub </span>TrustBackedAssetsPalletLocation: MultiLocation =
 		PalletInstance(&lt;Assets <span class="kw">as </span>PalletInfoAccess&gt;::index() <span class="kw">as </span>u8).into();
 	<span class="kw">pub </span>CheckingAccount: AccountId = PolkadotXcm::check_account();
+	<span class="kw">pub </span>FellowshipLocation: MultiLocation = MultiLocation::new(<span class="number">1</span>, Parachain(<span class="number">1001</span>));
+	<span class="kw">pub const </span>GovernanceLocation: MultiLocation = MultiLocation::parent();
 }
 
 <span class="doccomment">/// Type for specifying how a `MultiLocation` can be converted into an `AccountId`. This is used
@@ -475,21 +463,16 @@
 	</span>(),
 &gt;;
 
+<span class="doccomment">/// `AssetId/Balance` converter for `TrustBackedAssets``
+</span><span class="kw">pub type </span>TrustBackedAssetsConvertedConcreteId =
+	assets_common::TrustBackedAssetsConvertedConcreteId&lt;TrustBackedAssetsPalletLocation, Balance&gt;;
+
 <span class="doccomment">/// Means for transacting assets besides the native currency on this chain.
 </span><span class="kw">pub type </span>FungiblesTransactor = FungiblesAdapter&lt;
 	<span class="comment">// Use this fungibles implementation:
 	</span>Assets,
 	<span class="comment">// Use this currency when it is a fungible asset matching the given location or name:
-	</span>ConvertedConcreteId&lt;
-		AssetIdForTrustBackedAssets,
-		Balance,
-		AsPrefixedGeneralIndex&lt;
-			TrustBackedAssetsPalletLocation,
-			AssetIdForTrustBackedAssets,
-			JustTry,
-		&gt;,
-		JustTry,
-	&gt;,
+	</span>TrustBackedAssetsConvertedConcreteId,
 	<span class="comment">// Convert an XCM MultiLocation into a local account id:
 	</span>LocationToAccountId,
 	<span class="comment">// Our chain&#39;s account ID type (we can&#39;t get away without mentioning it explicitly):
@@ -542,6 +525,9 @@
 		MultiLocation { parents: <span class="number">1</span>, interior: Here } |
 		MultiLocation { parents: <span class="number">1</span>, interior: X1(<span class="kw">_</span>) }
 	};
+	<span class="kw">pub type </span>FellowsPlurality: <span class="kw">impl </span>Contains&lt;MultiLocation&gt; = {
+		MultiLocation { parents: <span class="number">1</span>, interior: X2(Parachain(<span class="number">1001</span>), Plurality { id: BodyId::Technical, ..}) }
+	};
 }
 
 <span class="doccomment">/// A call filter for the XCM Transact instruction. This is a temporary measure until we properly
@@ -562,6 +548,7 @@
 		}
 
 		<span class="kw">match </span>call {
+			RuntimeCall::PolkadotXcm(pallet_xcm::Call::force_xcm_version { .. }) |
 			RuntimeCall::System(
 				frame_system::Call::set_heap_pages { .. } |
 				frame_system::Call::set_code { .. } |
@@ -575,7 +562,8 @@
 				pallet_collator_selection::Call::set_desired_candidates { .. } |
 				pallet_collator_selection::Call::set_candidacy_bond { .. } |
 				pallet_collator_selection::Call::register_as_candidate { .. } |
-				pallet_collator_selection::Call::leave_intent { .. },
+				pallet_collator_selection::Call::leave_intent { .. } |
+				pallet_collator_selection::Call::set_invulnerables { .. },
 			) |
 			RuntimeCall::Session(pallet_session::Call::purge_keys { .. }) |
 			RuntimeCall::XcmpQueue(..) |
@@ -652,8 +640,8 @@
 			(
 				<span class="comment">// If the message is one that immediately attemps to pay for execution, then allow it.
 				</span>AllowTopLevelPaidExecutionFrom&lt;Everything&gt;,
-				<span class="comment">// Parent and its plurality (i.e. governance bodies) gets free execution.
-				</span>AllowExplicitUnpaidExecutionFrom&lt;ParentOrParentsPlurality&gt;,
+				<span class="comment">// Parent, its pluralities (i.e. governance bodies), and the Fellows plurality get free execution.
+				</span>AllowExplicitUnpaidExecutionFrom&lt;(ParentOrParentsPlurality, FellowsPlurality)&gt;,
 				<span class="comment">// Subscriptions for version tracking are OK.
 				</span>AllowSubscriptionsFrom&lt;ParentOrSiblings&gt;,
 			),
@@ -693,16 +681,7 @@
 		cumulus_primitives_utility::TakeFirstAssetTrader&lt;
 			AccountId,
 			AssetFeeAsExistentialDepositMultiplierFeeCharger,
-			ConvertedConcreteId&lt;
-				AssetIdForTrustBackedAssets,
-				Balance,
-				AsPrefixedGeneralIndex&lt;
-					TrustBackedAssetsPalletLocation,
-					AssetIdForTrustBackedAssets,
-					JustTry,
-				&gt;,
-				JustTry,
-			&gt;,
+			TrustBackedAssetsConvertedConcreteId,
 			Assets,
 			cumulus_primitives_utility::XcmFeesTo32ByteAccount&lt;
 				FungiblesTransactor,
@@ -774,6 +753,7 @@
 	<span class="kw">type </span>WeightInfo = <span class="kw">crate</span>::weights::pallet_xcm::WeightInfo&lt;Runtime&gt;;
 	<span class="attr">#[cfg(feature = <span class="string">&quot;runtime-benchmarks&quot;</span>)]
 	</span><span class="kw">type </span>ReachableDest = ReachableDest;
+	<span class="kw">type </span>AdminOrigin = EnsureRoot&lt;AccountId&gt;;
 }
 
 <span class="kw">impl </span>cumulus_pallet_xcm::Config <span class="kw">for </span>Runtime {
@@ -781,4 +761,4 @@
 	<span class="kw">type </span>XcmExecutor = XcmExecutor&lt;XcmConfig&gt;;
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="statemint_runtime" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0 (fc594f156 2023-01-24)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="statemint_runtime" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.2 (9eb3afe9e 2023-03-27)" data-search-js="search-98d53477a794af0b.js" data-settings-js="settings-c3c521c753752a1a.js" data-settings-css="settings-08ddfdda51b8ee2e.css" ></div></body></html>

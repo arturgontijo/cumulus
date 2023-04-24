@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `parachains/runtimes/bridge-hubs/bridge-hub-kusama/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../bridge_hub_kusama_runtime/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `parachains/runtimes/bridge-hubs/bridge-hub-kusama/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-93196c7a1c3542a8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-4743e13df3dfe8c4.css"><link rel="stylesheet" disabled href="../../static.files/dark-0e1b889528bd466b.css"><link rel="stylesheet" disabled href="../../static.files/ayu-65289d5d067c7c66.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../bridge_hub_kusama_runtime/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -744,6 +744,27 @@
 <a href="#744" id="744">744</a>
 <a href="#745" id="745">745</a>
 <a href="#746" id="746">746</a>
+<a href="#747" id="747">747</a>
+<a href="#748" id="748">748</a>
+<a href="#749" id="749">749</a>
+<a href="#750" id="750">750</a>
+<a href="#751" id="751">751</a>
+<a href="#752" id="752">752</a>
+<a href="#753" id="753">753</a>
+<a href="#754" id="754">754</a>
+<a href="#755" id="755">755</a>
+<a href="#756" id="756">756</a>
+<a href="#757" id="757">757</a>
+<a href="#758" id="758">758</a>
+<a href="#759" id="759">759</a>
+<a href="#760" id="760">760</a>
+<a href="#761" id="761">761</a>
+<a href="#762" id="762">762</a>
+<a href="#763" id="763">763</a>
+<a href="#764" id="764">764</a>
+<a href="#765" id="765">765</a>
+<a href="#766" id="766">766</a>
+<a href="#767" id="767">767</a>
 </pre><pre class="rust"><code><span class="comment">// Copyright 2022 Parity Technologies (UK) Ltd.
 // This file is part of Cumulus.
 
@@ -800,26 +821,27 @@
 	limits::{BlockLength, BlockWeights},
 	EnsureRoot,
 };
-<span class="kw">use </span>pallet_xcm::{EnsureXcm, IsMajorityOfBody};
+<span class="kw">use </span>pallet_xcm::{EnsureXcm, IsVoiceOfBody};
 <span class="kw">pub use </span>sp_consensus_aura::sr25519::AuthorityId <span class="kw">as </span>AuraId;
 <span class="kw">pub use </span>sp_runtime::{MultiAddress, Perbill, Permill};
-<span class="kw">use </span>xcm_config::{XcmConfig, XcmOriginToTransactDispatchOrigin};
+<span class="kw">use </span>xcm_config::{
+	FellowshipLocation, GovernanceLocation, XcmConfig, XcmOriginToTransactDispatchOrigin,
+};
 
 <span class="attr">#[cfg(any(feature = <span class="string">&quot;std&quot;</span>, test))]
 </span><span class="kw">pub use </span>sp_runtime::BuildStorage;
 
-<span class="comment">// Polkadot imports
-</span><span class="kw">use </span>polkadot_runtime_common::{BlockHashCount, SlowAdjustingFeeUpdate};
+<span class="kw">use </span>polkadot_runtime_common::{BlockHashCount, SlowAdjustingFeeUpdate};
 
 <span class="kw">use </span>weights::{BlockExecutionWeight, ExtrinsicBaseWeight, RocksDbWeight};
 
-<span class="comment">// XCM Imports
-</span><span class="kw">use </span><span class="kw">crate</span>::xcm_config::KsmRelayLocation;
 <span class="kw">use </span>parachains_common::{
-	opaque, AccountId, Balance, BlockNumber, Hash, Header, Index, Signature,
+	impls::DealWithFees, opaque, AccountId, Balance, BlockNumber, Hash, Header, Index, Signature,
 	AVERAGE_ON_INITIALIZE_RATIO, HOURS, MAXIMUM_BLOCK_WEIGHT, NORMAL_DISPATCH_RATIO, SLOT_DURATION,
 };
-<span class="kw">use </span>xcm::latest::prelude::BodyId;
+
+<span class="comment">// XCM Imports
+</span><span class="kw">use </span>xcm::latest::prelude::BodyId;
 <span class="kw">use </span>xcm_executor::XcmExecutor;
 
 <span class="doccomment">/// The address format for describing accounts.
@@ -873,10 +895,10 @@
 	spec_name: <span class="macro">create_runtime_str!</span>(<span class="string">&quot;bridge-hub-kusama&quot;</span>),
 	impl_name: <span class="macro">create_runtime_str!</span>(<span class="string">&quot;bridge-hub-kusama&quot;</span>),
 	authoring_version: <span class="number">1</span>,
-	spec_version: <span class="number">9370</span>,
+	spec_version: <span class="number">9400</span>,
 	impl_version: <span class="number">0</span>,
 	apis: RUNTIME_API_VERSIONS,
-	transaction_version: <span class="number">1</span>,
+	transaction_version: <span class="number">3</span>,
 	state_version: <span class="number">1</span>,
 };
 
@@ -888,12 +910,7 @@
 
 <span class="macro">parameter_types! </span>{
 	<span class="kw">pub const </span>Version: RuntimeVersion = VERSION;
-
-	<span class="comment">// This part is copied from Substrate&#39;s `bin/node/runtime/src/lib.rs`.
-	//  The `RuntimeBlockLength` and `RuntimeBlockWeights` exist here because the
-	// `DeletionWeightLimit` and `DeletionQueueDepth` depend on those to parameterize
-	// the lazy contract deletion.
-	</span><span class="kw">pub </span>RuntimeBlockLength: BlockLength =
+	<span class="kw">pub </span>RuntimeBlockLength: BlockLength =
 		BlockLength::max_with_normal_ratio(<span class="number">5 </span>* <span class="number">1024 </span>* <span class="number">1024</span>, NORMAL_DISPATCH_RATIO);
 	<span class="kw">pub </span>RuntimeBlockWeights: BlockWeights = BlockWeights::builder()
 		.base_block(BlockExecutionWeight::get())
@@ -996,6 +1013,10 @@
 	<span class="kw">type </span>MaxLocks = ConstU32&lt;<span class="number">50</span>&gt;;
 	<span class="kw">type </span>MaxReserves = ConstU32&lt;<span class="number">50</span>&gt;;
 	<span class="kw">type </span>ReserveIdentifier = [u8; <span class="number">8</span>];
+	<span class="kw">type </span>HoldIdentifier = ();
+	<span class="kw">type </span>FreezeIdentifier = ();
+	<span class="kw">type </span>MaxHolds = ConstU32&lt;<span class="number">0</span>&gt;;
+	<span class="kw">type </span>MaxFreezes = ConstU32&lt;<span class="number">0</span>&gt;;
 }
 
 <span class="macro">parameter_types! </span>{
@@ -1005,7 +1026,8 @@
 
 <span class="kw">impl </span>pallet_transaction_payment::Config <span class="kw">for </span>Runtime {
 	<span class="kw">type </span>RuntimeEvent = RuntimeEvent;
-	<span class="kw">type </span>OnChargeTransaction = pallet_transaction_payment::CurrencyAdapter&lt;Balances, ()&gt;;
+	<span class="kw">type </span>OnChargeTransaction =
+		pallet_transaction_payment::CurrencyAdapter&lt;Balances, DealWithFees&lt;Runtime&gt;&gt;;
 	<span class="kw">type </span>OperationalFeeMultiplier = ConstU8&lt;<span class="number">5</span>&gt;;
 	<span class="kw">type </span>WeightToFee = WeightToFee;
 	<span class="kw">type </span>LengthToFee = ConstantMultiplier&lt;Balance, TransactionByteFee&gt;;
@@ -1033,11 +1055,15 @@
 
 <span class="kw">impl </span>cumulus_pallet_aura_ext::Config <span class="kw">for </span>Runtime {}
 
-<span class="comment">// TODO: map gov2 origins here - after merge https://github.com/paritytech/cumulus/pull/1895
-</span><span class="doccomment">/// Privileged origin that represents Root or the majority of the Relay Chain Council.
-</span><span class="kw">pub type </span>RootOrExecutiveSimpleMajority = EitherOfDiverse&lt;
+<span class="macro">parameter_types! </span>{
+	<span class="comment">// Fellows pluralistic body.
+	</span><span class="kw">pub const </span>FellowsBodyId: BodyId = BodyId::Technical;
+}
+
+<span class="doccomment">/// Privileged origin that represents Root or Fellows pluralistic body.
+</span><span class="kw">pub type </span>RootOrFellows = EitherOfDiverse&lt;
 	EnsureRoot&lt;AccountId&gt;,
-	EnsureXcm&lt;IsMajorityOfBody&lt;KsmRelayLocation, ExecutiveBody&gt;&gt;,
+	EnsureXcm&lt;IsVoiceOfBody&lt;FellowshipLocation, FellowsBodyId&gt;&gt;,
 &gt;;
 
 <span class="kw">impl </span>cumulus_pallet_xcmp_queue::Config <span class="kw">for </span>Runtime {
@@ -1046,7 +1072,7 @@
 	<span class="kw">type </span>ChannelInfo = ParachainSystem;
 	<span class="kw">type </span>VersionWrapper = PolkadotXcm;
 	<span class="kw">type </span>ExecuteOverweightOrigin = EnsureRoot&lt;AccountId&gt;;
-	<span class="kw">type </span>ControllerOrigin = RootOrExecutiveSimpleMajority;
+	<span class="kw">type </span>ControllerOrigin = RootOrFellows;
 	<span class="kw">type </span>ControllerOriginConverter = XcmOriginToTransactDispatchOrigin;
 	<span class="kw">type </span>WeightInfo = weights::cumulus_pallet_xcmp_queue::WeightInfo&lt;Runtime&gt;;
 	<span class="kw">type </span>PriceForSiblingDelivery = ();
@@ -1084,12 +1110,15 @@
 <span class="macro">parameter_types! </span>{
 	<span class="kw">pub const </span>PotId: PalletId = PalletId(<span class="kw-2">*</span><span class="string">b&quot;PotStake&quot;</span>);
 	<span class="kw">pub const </span>SessionLength: BlockNumber = <span class="number">6 </span>* HOURS;
-	<span class="kw">pub const </span>ExecutiveBody: BodyId = BodyId::Executive;
+	<span class="comment">// StakingAdmin pluralistic body.
+	</span><span class="kw">pub const </span>StakingAdminBodyId: BodyId = BodyId::Defense;
 }
 
-<span class="comment">// TODO: map gov2 origins here - after merge https://github.com/paritytech/cumulus/pull/1895
-</span><span class="doccomment">/// We allow root and the Relay Chain council to execute privileged collator selection operations.
-</span><span class="kw">pub type </span>CollatorSelectionUpdateOrigin = RootOrExecutiveSimpleMajority;
+<span class="doccomment">/// We allow root, the StakingAdmin to execute privileged collator selection operations.
+</span><span class="kw">pub type </span>CollatorSelectionUpdateOrigin = EitherOfDiverse&lt;
+	EnsureRoot&lt;AccountId&gt;,
+	EnsureXcm&lt;IsVoiceOfBody&lt;GovernanceLocation, StakingAdminBodyId&gt;&gt;,
+&gt;;
 
 <span class="kw">impl </span>pallet_collator_selection::Config <span class="kw">for </span>Runtime {
 	<span class="kw">type </span>RuntimeEvent = RuntimeEvent;
@@ -1220,6 +1249,14 @@
 	<span class="kw">impl </span>sp_api::Metadata&lt;Block&gt; <span class="kw">for </span>Runtime {
 		<span class="kw">fn </span>metadata() -&gt; OpaqueMetadata {
 			OpaqueMetadata::new(Runtime::metadata().into())
+		}
+
+		<span class="kw">fn </span>metadata_at_version(version: u32) -&gt; <span class="prelude-ty">Option</span>&lt;OpaqueMetadata&gt; {
+			Runtime::metadata_at_version(version)
+		}
+
+		<span class="kw">fn </span>metadata_versions() -&gt; sp_std::vec::Vec&lt;u32&gt; {
+			Runtime::metadata_versions()
 		}
 	}
 
@@ -1413,7 +1450,7 @@
 					<span class="prelude-val">Err</span>(BenchmarkError::Skip)
 				}
 
-				<span class="kw">fn </span>universal_alias() -&gt; <span class="prelude-ty">Result</span>&lt;Junction, BenchmarkError&gt; {
+				<span class="kw">fn </span>universal_alias() -&gt; <span class="prelude-ty">Result</span>&lt;(MultiLocation, Junction), BenchmarkError&gt; {
 					<span class="prelude-val">Err</span>(BenchmarkError::Skip)
 				}
 
@@ -1433,6 +1470,11 @@
 				}
 
 				<span class="kw">fn </span>unlockable_asset() -&gt; <span class="prelude-ty">Result</span>&lt;(MultiLocation, MultiLocation, MultiAsset), BenchmarkError&gt; {
+					<span class="prelude-val">Err</span>(BenchmarkError::Skip)
+				}
+
+				<span class="kw">fn </span>export_message_origin_and_destination(
+				) -&gt; <span class="prelude-ty">Result</span>&lt;(MultiLocation, NetworkId, InteriorMultiLocation), BenchmarkError&gt; {
 					<span class="prelude-val">Err</span>(BenchmarkError::Skip)
 				}
 			}
@@ -1491,4 +1533,4 @@
 	CheckInherents = CheckInherents,
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bridge_hub_kusama_runtime" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0 (fc594f156 2023-01-24)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bridge_hub_kusama_runtime" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.2 (9eb3afe9e 2023-03-27)" data-search-js="search-98d53477a794af0b.js" data-settings-js="settings-c3c521c753752a1a.js" data-settings-css="settings-08ddfdda51b8ee2e.css" ></div></body></html>

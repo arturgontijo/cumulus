@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `parachains/runtimes/assets/statemint/src/weights/xcm/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-6827029ac823cab7.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../../static.files/light-ebce58d0a40c3431.css"><link rel="stylesheet" disabled href="../../../../static.files/dark-f23faae4a2daf9a6.css"><link rel="stylesheet" disabled href="../../../../static.files/ayu-8af5e100b21cd173.css"><script id="default-settings" ></script><script src="../../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../../static.files/source-script-5cf2e01a42cc9858.js"></script><script defer src="../../../../source-files.js"></script><script defer src="../../../../static.files/main-c55e1eb52e1886b4.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><div class="width-limiter"><nav class="sub"><a class="sub-logo-container" href="../../../../statemint_runtime/index.html"><img class="rust-logo" src="../../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `parachains/runtimes/assets/statemint/src/weights/xcm/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../../static.files/rustdoc-93196c7a1c3542a8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../../static.files/light-4743e13df3dfe8c4.css"><link rel="stylesheet" disabled href="../../../../static.files/dark-0e1b889528bd466b.css"><link rel="stylesheet" disabled href="../../../../static.files/ayu-65289d5d067c7c66.css"><script id="default-settings" ></script><script src="../../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../../../source-files.js"></script><script defer src="../../../../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../../statemint_runtime/index.html"><img class="rust-logo" src="../../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -241,6 +241,14 @@
 <a href="#241" id="241">241</a>
 <a href="#242" id="242">242</a>
 <a href="#243" id="243">243</a>
+<a href="#244" id="244">244</a>
+<a href="#245" id="245">245</a>
+<a href="#246" id="246">246</a>
+<a href="#247" id="247">247</a>
+<a href="#248" id="248">248</a>
+<a href="#249" id="249">249</a>
+<a href="#250" id="250">250</a>
+<a href="#251" id="251">251</a>
 </pre><pre class="rust"><code><span class="comment">// Copyright 2022 Parity Technologies (UK) Ltd.
 // This file is part of Cumulus.
 
@@ -260,7 +268,7 @@
 </span><span class="kw">mod </span>pallet_xcm_benchmarks_fungible;
 <span class="kw">mod </span>pallet_xcm_benchmarks_generic;
 
-<span class="kw">use </span><span class="kw">crate</span>::Runtime;
+<span class="kw">use crate</span>::{xcm_config::MaxAssetsIntoHolding, Runtime};
 <span class="kw">use </span>frame_support::weights::Weight;
 <span class="kw">use </span>pallet_xcm_benchmarks_fungible::WeightInfo <span class="kw">as </span>XcmFungibleWeight;
 <span class="kw">use </span>pallet_xcm_benchmarks_generic::WeightInfo <span class="kw">as </span>XcmGeneric;
@@ -271,14 +279,25 @@
 	<span class="kw">fn </span>weigh_multi_assets(<span class="kw-2">&amp;</span><span class="self">self</span>, weight: Weight) -&gt; Weight;
 }
 
-<span class="kw">const </span>MAX_ASSETS: u32 = <span class="number">100</span>;
+<span class="kw">const </span>MAX_ASSETS: u64 = <span class="number">100</span>;
 
 <span class="kw">impl </span>WeighMultiAssets <span class="kw">for </span>MultiAssetFilter {
 	<span class="kw">fn </span>weigh_multi_assets(<span class="kw-2">&amp;</span><span class="self">self</span>, weight: Weight) -&gt; Weight {
 		<span class="kw">match </span><span class="self">self </span>{
 			<span class="self">Self</span>::Definite(assets) =&gt;
 				weight.saturating_mul(assets.inner().into_iter().count() <span class="kw">as </span>u64),
-			<span class="self">Self</span>::Wild(<span class="kw">_</span>) =&gt; weight.saturating_mul(MAX_ASSETS <span class="kw">as </span>u64),
+			<span class="self">Self</span>::Wild(asset) =&gt; <span class="kw">match </span>asset {
+				All =&gt; weight.saturating_mul(MAX_ASSETS),
+				AllOf { fun, .. } =&gt; <span class="kw">match </span>fun {
+					WildFungibility::Fungible =&gt; weight,
+					<span class="comment">// Magic number 2 has to do with the fact that we could have up to 2 times
+					// MaxAssetsIntoHolding in the worst-case scenario.
+					</span>WildFungibility::NonFungible =&gt;
+						weight.saturating_mul((MaxAssetsIntoHolding::get() * <span class="number">2</span>) <span class="kw">as </span>u64),
+				},
+				AllCounted(count) =&gt; weight.saturating_mul(MAX_ASSETS.min(<span class="kw-2">*</span>count <span class="kw">as </span>u64)),
+				AllOfCounted { count, .. } =&gt; weight.saturating_mul(MAX_ASSETS.min(<span class="kw-2">*</span>count <span class="kw">as </span>u64)),
+			},
 		}
 	}
 }
@@ -297,7 +316,7 @@
 	<span class="comment">// Currently there is no trusted reserve
 	</span><span class="kw">fn </span>reserve_asset_deposited(_assets: <span class="kw-2">&amp;</span>MultiAssets) -&gt; Weight {
 		<span class="comment">// TODO: hardcoded - fix https://github.com/paritytech/cumulus/issues/1974
-		</span>Weight::from_ref_time(<span class="number">1_000_000_000 </span><span class="kw">as </span>u64)
+		</span>Weight::from_parts(<span class="number">1_000_000_000 </span><span class="kw">as </span>u64, <span class="number">0</span>)
 	}
 	<span class="kw">fn </span>receive_teleported_asset(assets: <span class="kw-2">&amp;</span>MultiAssets) -&gt; Weight {
 		assets.weigh_multi_assets(XcmFungibleWeight::&lt;Runtime&gt;::receive_teleported_asset())
@@ -355,7 +374,7 @@
 
 	<span class="kw">fn </span>deposit_asset(assets: <span class="kw-2">&amp;</span>MultiAssetFilter, _dest: <span class="kw-2">&amp;</span>MultiLocation) -&gt; Weight {
 		<span class="comment">// Hardcoded till the XCM pallet is fixed
-		</span><span class="kw">let </span>hardcoded_weight = Weight::from_ref_time(<span class="number">1_000_000_000 </span><span class="kw">as </span>u64);
+		</span><span class="kw">let </span>hardcoded_weight = Weight::from_parts(<span class="number">1_000_000_000 </span><span class="kw">as </span>u64, <span class="number">0</span>);
 		<span class="kw">let </span>weight = assets.weigh_multi_assets(XcmFungibleWeight::&lt;Runtime&gt;::deposit_asset());
 		hardcoded_weight.min(weight)
 	}
@@ -381,10 +400,7 @@
 		_dest: <span class="kw-2">&amp;</span>MultiLocation,
 		_xcm: <span class="kw-2">&amp;</span>Xcm&lt;()&gt;,
 	) -&gt; Weight {
-		<span class="comment">// Hardcoded till the XCM pallet is fixed
-		</span><span class="kw">let </span>hardcoded_weight = Weight::from_ref_time(<span class="number">200_000_000 </span><span class="kw">as </span>u64);
-		<span class="kw">let </span>weight = assets.weigh_multi_assets(XcmFungibleWeight::&lt;Runtime&gt;::initiate_teleport());
-		hardcoded_weight.min(weight)
+		assets.weigh_multi_assets(XcmFungibleWeight::&lt;Runtime&gt;::initiate_teleport())
 	}
 	<span class="kw">fn </span>report_holding(_response_info: <span class="kw-2">&amp;</span>QueryResponseInfo, _assets: <span class="kw-2">&amp;</span>MultiAssetFilter) -&gt; Weight {
 		XcmGeneric::&lt;Runtime&gt;::report_holding()
@@ -485,4 +501,4 @@
 	}
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="statemint_runtime" data-themes="" data-resource-suffix="" data-rustdoc-version="1.67.0 (fc594f156 2023-01-24)" data-search-js="search-444266647c4dba98.js" data-settings-js="settings-bebeae96e00e4617.js" data-settings-css="settings-af96d9e2fc13e081.css" ></div></body></html>
+</section></main><div id="rustdoc-vars" data-root-path="../../../../" data-static-root-path="../../../../static.files/" data-current-crate="statemint_runtime" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.2 (9eb3afe9e 2023-03-27)" data-search-js="search-98d53477a794af0b.js" data-settings-js="settings-c3c521c753752a1a.js" data-settings-css="settings-08ddfdda51b8ee2e.css" ></div></body></html>

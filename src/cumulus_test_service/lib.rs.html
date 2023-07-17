@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `test/service/src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-93196c7a1c3542a8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-4743e13df3dfe8c4.css"><link rel="stylesheet" disabled href="../../static.files/dark-0e1b889528bd466b.css"><link rel="stylesheet" disabled href="../../static.files/ayu-65289d5d067c7c66.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../cumulus_test_service/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `test/service/src/lib.rs`."><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="cumulus_test_service" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../cumulus_test_service/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -890,7 +890,17 @@
 <a href="#890" id="890">890</a>
 <a href="#891" id="891">891</a>
 <a href="#892" id="892">892</a>
-</pre><pre class="rust"><code><span class="comment">// Copyright 2019-2021 Parity Technologies (UK) Ltd.
+<a href="#893" id="893">893</a>
+<a href="#894" id="894">894</a>
+<a href="#895" id="895">895</a>
+<a href="#896" id="896">896</a>
+<a href="#897" id="897">897</a>
+<a href="#898" id="898">898</a>
+<a href="#899" id="899">899</a>
+<a href="#900" id="900">900</a>
+<a href="#901" id="901">901</a>
+<a href="#902" id="902">902</a>
+</pre></div><pre class="rust"><code><span class="comment">// Copyright 2019-2021 Parity Technologies (UK) Ltd.
 // This file is part of Cumulus.
 
 // Cumulus is free software: you can redistribute it and/or modify
@@ -910,9 +920,13 @@
 
 </span><span class="attr">#![warn(missing_docs)]
 
-</span><span class="kw">pub mod </span>chain_spec;
+</span><span class="doccomment">/// Utilities used for benchmarking
+</span><span class="kw">pub mod </span>bench_utils;
+
+<span class="kw">pub mod </span>chain_spec;
 <span class="kw">mod </span>genesis;
 
+<span class="kw">use </span>runtime::AccountId;
 <span class="kw">use </span>sc_executor::{HeapAllocStrategy, WasmExecutor, DEFAULT_HEAP_ALLOC_STRATEGY};
 <span class="kw">use </span>std::{
 	future::Future,
@@ -943,18 +957,18 @@
 <span class="kw">use </span>polkadot_overseer::Handle <span class="kw">as </span>OverseerHandle;
 <span class="kw">use </span>polkadot_primitives::{CollatorPair, Hash <span class="kw">as </span>PHash, PersistedValidationData};
 <span class="kw">use </span>polkadot_service::ProvideRuntimeApi;
-<span class="kw">use </span>sc_client_api::execution_extensions::ExecutionStrategies;
 <span class="kw">use </span>sc_consensus::ImportQueue;
 <span class="kw">use </span>sc_network::{
-	config::TransportConfig, multiaddr, NetworkBlock, NetworkService, NetworkStateInfo,
+	config::{FullNetworkConfiguration, TransportConfig},
+	multiaddr, NetworkBlock, NetworkService, NetworkStateInfo,
 };
 <span class="kw">use </span>sc_service::{
 	config::{
 		BlocksPruning, DatabaseSource, KeystoreConfig, MultiaddrWithPeerId, NetworkConfiguration,
 		OffchainWorkerConfig, PruningMode, WasmExecutionMethod,
 	},
-	BasePath, ChainSpec, Configuration, Error <span class="kw">as </span>ServiceError, PartialComponents, Role,
-	RpcHandlers, TFullBackend, TFullClient, TaskManager,
+	BasePath, ChainSpec <span class="kw">as </span>ChainSpecService, Configuration, Error <span class="kw">as </span>ServiceError,
+	PartialComponents, Role, RpcHandlers, TFullBackend, TFullClient, TaskManager,
 };
 <span class="kw">use </span>sp_arithmetic::traits::SaturatedConversion;
 <span class="kw">use </span>sp_blockchain::HeaderBackend;
@@ -1215,9 +1229,12 @@
 	</span>.map_err(|e| sc_service::Error::Application(Box::new(e) <span class="kw">as </span>Box&lt;<span class="kw">_</span>&gt;))<span class="question-mark">?</span>;
 
 	<span class="kw">let </span>import_queue_service = params.import_queue.service();
+	<span class="kw">let </span>net_config = FullNetworkConfiguration::new(<span class="kw-2">&amp;</span>parachain_config.network);
+
 	<span class="kw">let </span>(network, system_rpc_tx, tx_handler_controller, start_network, sync_service) =
 		build_network(BuildNetworkParams {
 			parachain_config: <span class="kw-2">&amp;</span>parachain_config,
+			net_config,
 			client: client.clone(),
 			transaction_pool: transaction_pool.clone(),
 			para_id,
@@ -1389,6 +1406,7 @@
 	storage_update_func_relay_chain: <span class="prelude-ty">Option</span>&lt;Box&lt;<span class="kw">dyn </span>Fn()&gt;&gt;,
 	consensus: Consensus,
 	relay_chain_full_node_url: Vec&lt;Url&gt;,
+	endowed_accounts: Vec&lt;AccountId&gt;,
 }
 
 <span class="kw">impl </span>TestNodeBuilder {
@@ -1411,6 +1429,7 @@
 			storage_update_func_relay_chain: <span class="prelude-val">None</span>,
 			consensus: Consensus::RelayChain,
 			relay_chain_full_node_url: <span class="macro">vec!</span>[],
+			endowed_accounts: Default::default(),
 		}
 	}
 
@@ -1517,16 +1536,23 @@
 		<span class="self">self
 	</span>}
 
+	<span class="doccomment">/// Accounts which will have an initial balance.
+	</span><span class="kw">pub fn </span>endowed_accounts(<span class="kw-2">mut </span><span class="self">self</span>, accounts: Vec&lt;AccountId&gt;) -&gt; TestNodeBuilder {
+		<span class="self">self</span>.endowed_accounts = accounts;
+		<span class="self">self
+	</span>}
+
 	<span class="doccomment">/// Build the [`TestNode`].
 	</span><span class="kw">pub async fn </span>build(<span class="self">self</span>) -&gt; TestNode {
 		<span class="kw">let </span>parachain_config = node_config(
 			<span class="self">self</span>.storage_update_func_parachain.unwrap_or_else(|| Box::new(|| ())),
 			<span class="self">self</span>.tokio_handle.clone(),
-			<span class="self">self</span>.key.clone(),
+			<span class="self">self</span>.key,
 			<span class="self">self</span>.parachain_nodes,
 			<span class="self">self</span>.parachain_nodes_exclusive,
 			<span class="self">self</span>.para_id,
 			<span class="self">self</span>.collator_key.is_some(),
+			<span class="self">self</span>.endowed_accounts,
 		)
 		.expect(<span class="string">&quot;could not generate Configuration&quot;</span>);
 
@@ -1559,7 +1585,7 @@
 		.<span class="kw">await
 		</span>.expect(<span class="string">&quot;could not create Cumulus test service&quot;</span>);
 
-		<span class="kw">let </span>peer_id = network.local_peer_id().clone();
+		<span class="kw">let </span>peer_id = network.local_peer_id();
 		<span class="kw">let </span>addr = MultiaddrWithPeerId { multiaddr, peer_id };
 
 		TestNode { task_manager, client, network, addr, rpc_handlers, transaction_pool }
@@ -1580,12 +1606,14 @@
 	nodes_exlusive: bool,
 	para_id: ParaId,
 	is_collator: bool,
+	endowed_accounts: Vec&lt;AccountId&gt;,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;Configuration, ServiceError&gt; {
 	<span class="kw">let </span>base_path = BasePath::new_temp_dir()<span class="question-mark">?</span>;
-	<span class="kw">let </span>root = base_path.path().join(<span class="macro">format!</span>(<span class="string">&quot;cumulus_test_service_{}&quot;</span>, key.to_string()));
+	<span class="kw">let </span>root = base_path.path().join(<span class="macro">format!</span>(<span class="string">&quot;cumulus_test_service_{}&quot;</span>, key));
 	<span class="kw">let </span>role = <span class="kw">if </span>is_collator { Role::Authority } <span class="kw">else </span>{ Role::Full };
 	<span class="kw">let </span>key_seed = key.to_seed();
-	<span class="kw">let </span><span class="kw-2">mut </span>spec = Box::new(chain_spec::get_chain_spec(para_id));
+	<span class="kw">let </span><span class="kw-2">mut </span>spec =
+		Box::new(chain_spec::get_chain_spec_with_extra_endowed(para_id, endowed_accounts));
 
 	<span class="kw">let </span><span class="kw-2">mut </span>storage = spec.as_storage_builder().build_storage().expect(<span class="string">&quot;could not build storage&quot;</span>);
 
@@ -1628,27 +1656,18 @@
 		state_pruning: <span class="prelude-val">Some</span>(PruningMode::ArchiveAll),
 		blocks_pruning: BlocksPruning::KeepAll,
 		chain_spec: spec,
-		wasm_method: WasmExecutionMethod::Interpreted,
-		<span class="comment">// NOTE: we enforce the use of the native runtime to make the errors more debuggable
-		</span>execution_strategies: ExecutionStrategies {
-			syncing: sc_client_api::ExecutionStrategy::NativeWhenPossible,
-			importing: sc_client_api::ExecutionStrategy::NativeWhenPossible,
-			block_construction: sc_client_api::ExecutionStrategy::NativeWhenPossible,
-			offchain_worker: sc_client_api::ExecutionStrategy::NativeWhenPossible,
-			other: sc_client_api::ExecutionStrategy::NativeWhenPossible,
+		wasm_method: WasmExecutionMethod::Compiled {
+			instantiation_strategy: sc_executor_wasmtime::InstantiationStrategy::PoolingCopyOnWrite,
 		},
-		rpc_http: <span class="prelude-val">None</span>,
-		rpc_ws: <span class="prelude-val">None</span>,
-		rpc_ipc: <span class="prelude-val">None</span>,
-		rpc_ws_max_connections: <span class="prelude-val">None</span>,
+		rpc_addr: <span class="prelude-val">None</span>,
+		rpc_max_connections: Default::default(),
 		rpc_cors: <span class="prelude-val">None</span>,
 		rpc_methods: Default::default(),
-		rpc_max_payload: <span class="prelude-val">None</span>,
-		rpc_max_request_size: <span class="prelude-val">None</span>,
-		rpc_max_response_size: <span class="prelude-val">None</span>,
+		rpc_max_request_size: Default::default(),
+		rpc_max_response_size: Default::default(),
 		rpc_id_provider: <span class="prelude-val">None</span>,
-		rpc_max_subs_per_conn: <span class="prelude-val">None</span>,
-		ws_max_out_buffer_capacity: <span class="prelude-val">None</span>,
+		rpc_max_subs_per_conn: Default::default(),
+		rpc_port: <span class="number">9945</span>,
 		prometheus_config: <span class="prelude-val">None</span>,
 		telemetry_endpoints: <span class="prelude-val">None</span>,
 		default_heap_pages: <span class="prelude-val">None</span>,
@@ -1660,7 +1679,8 @@
 		tracing_receiver: Default::default(),
 		max_runtime_instances: <span class="number">8</span>,
 		announce_block: <span class="bool-val">true</span>,
-		base_path: <span class="prelude-val">Some</span>(base_path),
+		data_path: root,
+		base_path,
 		informant_output_format: Default::default(),
 		wasm_runtime_overrides: <span class="prelude-val">None</span>,
 		runtime_cache_size: <span class="number">2</span>,
@@ -1681,7 +1701,7 @@
 		function: <span class="kw">impl </span>Into&lt;runtime::RuntimeCall&gt;,
 		caller: Sr25519Keyring,
 	) -&gt; <span class="prelude-ty">Result</span>&lt;RpcTransactionOutput, RpcTransactionError&gt; {
-		<span class="kw">let </span>extrinsic = construct_extrinsic(<span class="kw-2">&amp;*</span><span class="self">self</span>.client, function, caller.pair(), <span class="prelude-val">Some</span>(<span class="number">0</span>));
+		<span class="kw">let </span>extrinsic = construct_extrinsic(<span class="kw-2">&amp;</span><span class="self">self</span>.client, function, caller.pair(), <span class="prelude-val">Some</span>(<span class="number">0</span>));
 
 		<span class="self">self</span>.rpc_handlers.send_transaction(extrinsic.into()).<span class="kw">await
 	</span>}
@@ -1763,7 +1783,7 @@
 	key: Sr25519Keyring,
 	storage_update_func: <span class="kw">impl </span>Fn(),
 	boot_nodes: Vec&lt;MultiaddrWithPeerId&gt;,
-	websocket_port: <span class="prelude-ty">Option</span>&lt;u16&gt;,
+	port: <span class="prelude-ty">Option</span>&lt;u16&gt;,
 ) -&gt; polkadot_test_service::PolkadotTestNode {
 	<span class="kw">let </span><span class="kw-2">mut </span>config = polkadot_test_service::node_config(
 		storage_update_func,
@@ -1773,8 +1793,8 @@
 		<span class="bool-val">true</span>,
 	);
 
-	<span class="kw">if let </span><span class="prelude-val">Some</span>(port) = websocket_port {
-		config.rpc_ws = <span class="prelude-val">Some</span>(SocketAddr::new(IpAddr::V4(Ipv4Addr::new(<span class="number">127</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>)), port));
+	<span class="kw">if let </span><span class="prelude-val">Some</span>(port) = port {
+		config.rpc_addr = <span class="prelude-val">Some</span>(SocketAddr::new(IpAddr::V4(Ipv4Addr::new(<span class="number">127</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>)), port));
 	}
 
 	polkadot_test_service::run_validator_node(
@@ -1782,5 +1802,4 @@
 		<span class="prelude-val">Some</span>(cumulus_test_relay_validation_worker_provider::VALIDATION_WORKER.into()),
 	)
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="cumulus_test_service" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.2 (9eb3afe9e 2023-03-27)" data-search-js="search-98d53477a794af0b.js" data-settings-js="settings-c3c521c753752a1a.js" data-settings-css="settings-08ddfdda51b8ee2e.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

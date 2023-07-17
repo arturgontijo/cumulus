@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `client/consensus/common/src/level_monitor.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>level_monitor.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-93196c7a1c3542a8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-4743e13df3dfe8c4.css"><link rel="stylesheet" disabled href="../../static.files/dark-0e1b889528bd466b.css"><link rel="stylesheet" disabled href="../../static.files/ayu-65289d5d067c7c66.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../cumulus_client_consensus_common/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `client/consensus/common/src/level_monitor.rs`."><title>level_monitor.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="cumulus_client_consensus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../cumulus_client_consensus_common/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -372,7 +372,21 @@
 <a href="#372" id="372">372</a>
 <a href="#373" id="373">373</a>
 <a href="#374" id="374">374</a>
-</pre><pre class="rust"><code><span class="comment">// Copyright 2022 Parity Technologies (UK) Ltd.
+<a href="#375" id="375">375</a>
+<a href="#376" id="376">376</a>
+<a href="#377" id="377">377</a>
+<a href="#378" id="378">378</a>
+<a href="#379" id="379">379</a>
+<a href="#380" id="380">380</a>
+<a href="#381" id="381">381</a>
+<a href="#382" id="382">382</a>
+<a href="#383" id="383">383</a>
+<a href="#384" id="384">384</a>
+<a href="#385" id="385">385</a>
+<a href="#386" id="386">386</a>
+<a href="#387" id="387">387</a>
+<a href="#388" id="388">388</a>
+</pre></div><pre class="rust"><code><span class="comment">// Copyright 2022 Parity Technologies (UK) Ltd.
 // This file is part of Cumulus.
 
 // Cumulus is free software: you can redistribute it and/or modify
@@ -395,6 +409,8 @@
 	collections::{HashMap, HashSet},
 	sync::Arc,
 };
+
+<span class="kw">const </span>LOG_TARGET: <span class="kw-2">&amp;</span>str = <span class="string">&quot;level-monitor&quot;</span>;
 
 <span class="doccomment">/// Value good enough to be used with parachains using the current backend implementation
 /// that ships with Substrate. This value may change in the future.
@@ -474,9 +490,10 @@
 		<span class="kw">let </span>info = <span class="self">self</span>.backend.blockchain().info();
 
 		<span class="macro">log::debug!</span>(
-			target: <span class="string">&quot;parachain&quot;</span>,
+			target: LOG_TARGET,
 			<span class="string">&quot;Restoring chain level monitor from last finalized block: {} {}&quot;</span>,
-			info.finalized_number, info.finalized_hash
+			info.finalized_number,
+			info.finalized_hash
 		);
 
 		<span class="self">self</span>.lowest_level = info.finalized_number;
@@ -498,7 +515,11 @@
 			}
 		}
 
-		<span class="macro">log::debug!</span>(target: <span class="string">&quot;parachain&quot;</span>, <span class="string">&quot;Restored chain level monitor up to height {}&quot;</span>, <span class="self">self</span>.import_counter);
+		<span class="macro">log::debug!</span>(
+			target: LOG_TARGET,
+			<span class="string">&quot;Restored chain level monitor up to height {}&quot;</span>,
+			<span class="self">self</span>.import_counter
+		);
 	}
 
 	<span class="doccomment">/// Check and enforce the limit bound at the given height.
@@ -535,7 +556,7 @@
 		</span><span class="kw">let </span>remove_count = level_len - <span class="self">self</span>.level_limit + <span class="number">1</span>;
 
 		<span class="macro">log::debug!</span>(
-			target: <span class="string">&quot;parachain&quot;</span>,
+			target: LOG_TARGET,
 			<span class="string">&quot;Detected leaves overflow at height {number}, removing {remove_count} obsolete blocks&quot;</span>,
 		);
 
@@ -598,9 +619,11 @@
 							}),
 							<span class="prelude-val">Err</span>(err) =&gt; {
 								<span class="macro">log::warn!</span>(
-									target: <span class="string">&quot;parachain&quot;</span>,
+									target: LOG_TARGET,
 									<span class="string">&quot;(Lookup) Unable getting route from {:?} to {:?}: {}&quot;</span>,
-									blk_hash, leaf_hash, err,
+									blk_hash,
+									leaf_hash,
+									err,
 								);
 								<span class="prelude-val">None
 							</span>},
@@ -617,7 +640,7 @@
 				<span class="prelude-val">None </span>=&gt; {
 					<span class="comment">// This should never happen
 					</span><span class="macro">log::error!</span>(
-						target: <span class="string">&quot;parachain&quot;</span>,
+						target: LOG_TARGET,
 						<span class="string">&quot;Unable getting route to any leaf from {:?} (this is a bug)&quot;</span>,
 						blk_hash,
 					);
@@ -668,9 +691,9 @@
 		invalidated_leaves: <span class="kw-2">&amp;mut </span>HashSet&lt;usize&gt;,
 	) {
 		<span class="kw">let </span><span class="kw-2">mut </span>remove_leaf = |number, hash| {
-			<span class="macro">log::debug!</span>(target: <span class="string">&quot;parachain&quot;</span>, <span class="string">&quot;Removing block (@{}) {:?}&quot;</span>, number, hash);
+			<span class="macro">log::debug!</span>(target: LOG_TARGET, <span class="string">&quot;Removing block (@{}) {:?}&quot;</span>, number, hash);
 			<span class="kw">if let </span><span class="prelude-val">Err</span>(err) = <span class="self">self</span>.backend.remove_leaf_block(hash) {
-				<span class="macro">log::debug!</span>(target: <span class="string">&quot;parachain&quot;</span>, <span class="string">&quot;Remove not possible for {}: {}&quot;</span>, hash, err);
+				<span class="macro">log::debug!</span>(target: LOG_TARGET, <span class="string">&quot;Remove not possible for {}: {}&quot;</span>, hash, err);
 				<span class="kw">return </span><span class="bool-val">false
 			</span>}
 			<span class="self">self</span>.levels.get_mut(<span class="kw-2">&amp;</span>number).map(|level| level.remove(<span class="kw-2">&amp;</span>hash));
@@ -711,9 +734,11 @@
 				},
 				<span class="prelude-val">Err</span>(err) =&gt; {
 					<span class="macro">log::warn!</span>(
-						target: <span class="string">&quot;parachain&quot;</span>,
+						target: LOG_TARGET,
 						<span class="string">&quot;(Removal) unable getting route from {:?} to {:?}: {}&quot;</span>,
-						target_hash, leaf_hash, err,
+						target_hash,
+						leaf_hash,
+						err,
 					);
 				},
 				<span class="kw">_ </span>=&gt; (),
@@ -725,15 +750,19 @@
 
 	<span class="doccomment">/// Add a new imported block information to the monitor.
 	</span><span class="kw">pub fn </span>block_imported(<span class="kw-2">&amp;mut </span><span class="self">self</span>, number: NumberFor&lt;Block&gt;, hash: Block::Hash) {
-		<span class="self">self</span>.import_counter += One::one();
-		<span class="self">self</span>.freshness.insert(hash, <span class="self">self</span>.import_counter);
-		<span class="self">self</span>.levels.entry(number).or_default().insert(hash);
+		<span class="kw">let </span>finalized_num = <span class="self">self</span>.backend.blockchain().info().finalized_number;
 
-		<span class="comment">// Do cleanup once in a while, we are allowed to have some obsolete information.
-		</span><span class="kw">let </span>finalized_num = <span class="self">self</span>.backend.blockchain().info().finalized_number;
+		<span class="kw">if </span>number &gt; finalized_num {
+			<span class="comment">// Only blocks above the last finalized block should be added to the monitor
+			</span><span class="self">self</span>.import_counter += One::one();
+			<span class="self">self</span>.freshness.insert(hash, <span class="self">self</span>.import_counter);
+			<span class="self">self</span>.levels.entry(number).or_default().insert(hash);
+		}
+
 		<span class="kw">let </span>delta: u32 = finalized_num.saturating_sub(<span class="self">self</span>.lowest_level).unique_saturated_into();
 		<span class="kw">if </span>delta &gt;= CLEANUP_THRESHOLD {
-			<span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..delta {
+			<span class="comment">// Do cleanup once in a while, we are allowed to have some obsolete information.
+			</span><span class="kw">for </span>i <span class="kw">in </span><span class="number">0</span>..delta {
 				<span class="kw">let </span>number = <span class="self">self</span>.lowest_level + i.unique_saturated_into();
 				<span class="self">self</span>.levels.remove(<span class="kw-2">&amp;</span>number).map(|level| {
 					level.iter().for_each(|hash| {
@@ -741,10 +770,8 @@
 					})
 				});
 			}
-
 			<span class="self">self</span>.lowest_level = finalized_num;
 		}
 	}
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="cumulus_client_consensus_common" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.2 (9eb3afe9e 2023-03-27)" data-search-js="search-98d53477a794af0b.js" data-settings-js="settings-c3c521c753752a1a.js" data-settings-css="settings-08ddfdda51b8ee2e.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

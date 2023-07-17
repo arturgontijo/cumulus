@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `polkadot-parachain/src/chain_spec/bridge_hubs.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>bridge_hubs.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-93196c7a1c3542a8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-4743e13df3dfe8c4.css"><link rel="stylesheet" disabled href="../../../static.files/dark-0e1b889528bd466b.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-65289d5d067c7c66.css"><script id="default-settings" ></script><script src="../../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../polkadot_parachain/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `polkadot-parachain/src/chain_spec/bridge_hubs.rs`."><title>bridge_hubs.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="polkadot_parachain" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../polkadot_parachain/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -622,55 +622,7 @@
 <a href="#622" id="622">622</a>
 <a href="#623" id="623">623</a>
 <a href="#624" id="624">624</a>
-<a href="#625" id="625">625</a>
-<a href="#626" id="626">626</a>
-<a href="#627" id="627">627</a>
-<a href="#628" id="628">628</a>
-<a href="#629" id="629">629</a>
-<a href="#630" id="630">630</a>
-<a href="#631" id="631">631</a>
-<a href="#632" id="632">632</a>
-<a href="#633" id="633">633</a>
-<a href="#634" id="634">634</a>
-<a href="#635" id="635">635</a>
-<a href="#636" id="636">636</a>
-<a href="#637" id="637">637</a>
-<a href="#638" id="638">638</a>
-<a href="#639" id="639">639</a>
-<a href="#640" id="640">640</a>
-<a href="#641" id="641">641</a>
-<a href="#642" id="642">642</a>
-<a href="#643" id="643">643</a>
-<a href="#644" id="644">644</a>
-<a href="#645" id="645">645</a>
-<a href="#646" id="646">646</a>
-<a href="#647" id="647">647</a>
-<a href="#648" id="648">648</a>
-<a href="#649" id="649">649</a>
-<a href="#650" id="650">650</a>
-<a href="#651" id="651">651</a>
-<a href="#652" id="652">652</a>
-<a href="#653" id="653">653</a>
-<a href="#654" id="654">654</a>
-<a href="#655" id="655">655</a>
-<a href="#656" id="656">656</a>
-<a href="#657" id="657">657</a>
-<a href="#658" id="658">658</a>
-<a href="#659" id="659">659</a>
-<a href="#660" id="660">660</a>
-<a href="#661" id="661">661</a>
-<a href="#662" id="662">662</a>
-<a href="#663" id="663">663</a>
-<a href="#664" id="664">664</a>
-<a href="#665" id="665">665</a>
-<a href="#666" id="666">666</a>
-<a href="#667" id="667">667</a>
-<a href="#668" id="668">668</a>
-<a href="#669" id="669">669</a>
-<a href="#670" id="670">670</a>
-<a href="#671" id="671">671</a>
-<a href="#672" id="672">672</a>
-</pre><pre class="rust"><code><span class="comment">// Copyright 2019-2021 Parity Technologies (UK) Ltd.
+</pre></div><pre class="rust"><code><span class="comment">// Copyright 2022 Parity Technologies (UK) Ltd.
 // This file is part of Cumulus.
 
 // Cumulus is free software: you can redistribute it and/or modify
@@ -686,10 +638,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Cumulus.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
 
-</span><span class="kw">use </span>cumulus_primitives_core::ParaId;
+</span><span class="kw">use </span><span class="kw">crate</span>::chain_spec::{get_account_id_from_seed, get_collator_keys_from_seed};
+<span class="kw">use </span>cumulus_primitives_core::ParaId;
 <span class="kw">use </span>parachains_common::Balance <span class="kw">as </span>BridgeHubBalance;
 <span class="kw">use </span>sc_chain_spec::ChainSpec;
-<span class="kw">use </span>sc_cli::RuntimeVersion;
+<span class="kw">use </span>sp_core::sr25519;
 <span class="kw">use </span>std::{path::PathBuf, str::FromStr};
 
 <span class="doccomment">/// Collects all supported BridgeHub configurations
@@ -802,18 +755,16 @@
 				<span class="prelude-val">Ok</span>(Box::new(westend::BridgeHubChainSpec::from_json_bytes(
 					<span class="kw-2">&amp;</span><span class="macro">include_bytes!</span>(<span class="string">&quot;../../../parachains/chain-specs/bridge-hub-westend.json&quot;</span>)[..],
 				)<span class="question-mark">?</span>)),
-			BridgeHubRuntimeType::Rococo =&gt; <span class="prelude-val">Ok</span>(Box::new(rococo::live_config(
-				rococo::BRIDGE_HUB_ROCOCO,
-				<span class="string">&quot;Rococo BridgeHub&quot;</span>,
-				<span class="string">&quot;rococo&quot;</span>,
-				ParaId::new(<span class="number">1013</span>),
-				|<span class="kw">_</span>| (),
-			))),
+			BridgeHubRuntimeType::Rococo =&gt;
+				<span class="prelude-val">Ok</span>(Box::new(rococo::BridgeHubChainSpec::from_json_bytes(
+					<span class="kw-2">&amp;</span><span class="macro">include_bytes!</span>(<span class="string">&quot;../../../parachains/chain-specs/bridge-hub-rococo.json&quot;</span>)[..],
+				)<span class="question-mark">?</span>)),
 			BridgeHubRuntimeType::RococoLocal =&gt; <span class="prelude-val">Ok</span>(Box::new(rococo::local_config(
 				rococo::BRIDGE_HUB_ROCOCO_LOCAL,
 				<span class="string">&quot;Rococo BridgeHub Local&quot;</span>,
 				<span class="string">&quot;rococo-local&quot;</span>,
 				ParaId::new(<span class="number">1013</span>),
+				<span class="prelude-val">Some</span>(<span class="string">&quot;Bob&quot;</span>.to_string()),
 				|<span class="kw">_</span>| (),
 			))),
 			BridgeHubRuntimeType::RococoDevelopment =&gt; <span class="prelude-val">Ok</span>(Box::new(rococo::local_config(
@@ -821,40 +772,20 @@
 				<span class="string">&quot;Rococo BridgeHub Development&quot;</span>,
 				<span class="string">&quot;rococo-dev&quot;</span>,
 				ParaId::new(<span class="number">1013</span>),
+				<span class="prelude-val">Some</span>(<span class="string">&quot;Bob&quot;</span>.to_string()),
 				|<span class="kw">_</span>| (),
 			))),
-			BridgeHubRuntimeType::Wococo =&gt; <span class="prelude-val">Ok</span>(Box::new(wococo::live_config(
-				wococo::BRIDGE_HUB_WOCOCO,
-				<span class="string">&quot;Wococo BridgeHub&quot;</span>,
-				<span class="string">&quot;wococo&quot;</span>,
-				ParaId::new(<span class="number">1014</span>),
-			))),
+			BridgeHubRuntimeType::Wococo =&gt;
+				<span class="prelude-val">Ok</span>(Box::new(wococo::BridgeHubChainSpec::from_json_bytes(
+					<span class="kw-2">&amp;</span><span class="macro">include_bytes!</span>(<span class="string">&quot;../../../parachains/chain-specs/bridge-hub-wococo.json&quot;</span>)[..],
+				)<span class="question-mark">?</span>)),
 			BridgeHubRuntimeType::WococoLocal =&gt; <span class="prelude-val">Ok</span>(Box::new(wococo::local_config(
 				wococo::BRIDGE_HUB_WOCOCO_LOCAL,
 				<span class="string">&quot;Wococo BridgeHub Local&quot;</span>,
 				<span class="string">&quot;wococo-local&quot;</span>,
 				ParaId::new(<span class="number">1014</span>),
+				<span class="prelude-val">Some</span>(<span class="string">&quot;Bob&quot;</span>.to_string()),
 			))),
-		}
-	}
-
-	<span class="kw">pub fn </span>runtime_version(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>RuntimeVersion {
-		<span class="kw">match </span><span class="self">self </span>{
-			BridgeHubRuntimeType::Polkadot |
-			BridgeHubRuntimeType::PolkadotLocal |
-			BridgeHubRuntimeType::PolkadotDevelopment =&gt; <span class="kw-2">&amp;</span>bridge_hub_polkadot_runtime::VERSION,
-			BridgeHubRuntimeType::Kusama |
-			BridgeHubRuntimeType::KusamaLocal |
-			BridgeHubRuntimeType::KusamaDevelopment =&gt; <span class="kw-2">&amp;</span>bridge_hub_kusama_runtime::VERSION,
-			BridgeHubRuntimeType::Westend =&gt; <span class="kw-2">&amp;</span>bridge_hub_kusama_runtime::VERSION,
-			BridgeHubRuntimeType::Rococo |
-			BridgeHubRuntimeType::RococoLocal |
-			BridgeHubRuntimeType::RococoDevelopment |
-			BridgeHubRuntimeType::Wococo |
-			BridgeHubRuntimeType::WococoLocal =&gt; {
-				<span class="comment">// this is intentional, for Rococo/Wococo we just want to have one runtime, which is configured for both sides
-				</span><span class="kw-2">&amp;</span>bridge_hub_rococo_runtime::VERSION
-			},
 		}
 	}
 }
@@ -874,13 +805,12 @@
 
 <span class="doccomment">/// Sub-module for Rococo setup
 </span><span class="kw">pub mod </span>rococo {
-	<span class="kw">use super</span>::{BridgeHubBalance, ParaId};
-	<span class="kw">use </span><span class="kw">crate</span>::chain_spec::{
-		get_account_id_from_seed, get_collator_keys_from_seed, Extensions, SAFE_XCM_VERSION,
-	};
+	<span class="kw">use super</span>::{get_account_id_from_seed, get_collator_keys_from_seed, sr25519, ParaId};
+	<span class="kw">use </span><span class="kw">crate</span>::chain_spec::{Extensions, SAFE_XCM_VERSION};
 	<span class="kw">use </span>parachains_common::{AccountId, AuraId};
 	<span class="kw">use </span>sc_chain_spec::ChainType;
-	<span class="kw">use </span>sp_core::sr25519;
+
+	<span class="kw">use </span><span class="kw">super</span>::BridgeHubBalance;
 
 	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>BRIDGE_HUB_ROCOCO: <span class="kw-2">&amp;</span>str = <span class="string">&quot;bridge-hub-rococo&quot;</span>;
 	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const </span>BRIDGE_HUB_ROCOCO_LOCAL: <span class="kw-2">&amp;</span>str = <span class="string">&quot;bridge-hub-rococo-local&quot;</span>;
@@ -890,74 +820,16 @@
 
 	<span class="doccomment">/// Specialized `ChainSpec` for the normal parachain runtime.
 	</span><span class="kw">pub type </span>BridgeHubChainSpec =
-		sc_service::GenericChainSpec&lt;bridge_hub_rococo_runtime::GenesisConfig, Extensions&gt;;
+		sc_service::GenericChainSpec&lt;bridge_hub_rococo_runtime::RuntimeGenesisConfig, Extensions&gt;;
 
 	<span class="kw">pub type </span>RuntimeApi = bridge_hub_rococo_runtime::RuntimeApi;
-
-	<span class="kw">pub fn </span>live_config&lt;ModifyProperties: Fn(<span class="kw-2">&amp;mut </span>sc_chain_spec::Properties)&gt;(
-		id: <span class="kw-2">&amp;</span>str,
-		chain_name: <span class="kw-2">&amp;</span>str,
-		relay_chain: <span class="kw-2">&amp;</span>str,
-		para_id: ParaId,
-		modify_props: ModifyProperties,
-	) -&gt; BridgeHubChainSpec {
-		<span class="comment">// Rococo defaults
-		</span><span class="kw">let </span><span class="kw-2">mut </span>properties = sc_chain_spec::Properties::new();
-		properties.insert(<span class="string">&quot;ss58Format&quot;</span>.into(), <span class="number">42</span>.into());
-		properties.insert(<span class="string">&quot;tokenSymbol&quot;</span>.into(), <span class="string">&quot;ROC&quot;</span>.into());
-		properties.insert(<span class="string">&quot;tokenDecimals&quot;</span>.into(), <span class="number">12</span>.into());
-		modify_props(<span class="kw-2">&amp;mut </span>properties);
-
-		BridgeHubChainSpec::from_genesis(
-			<span class="comment">// Name
-			</span>chain_name,
-			<span class="comment">// ID
-			</span><span class="kw">super</span>::ensure_id(id).expect(<span class="string">&quot;invalid id&quot;</span>),
-			ChainType::Live,
-			<span class="kw">move </span>|| {
-				genesis(
-					<span class="comment">// initial collators.
-					</span><span class="macro">vec!</span>[
-						(
-							get_account_id_from_seed::&lt;sr25519::Public&gt;(<span class="string">&quot;Alice&quot;</span>),
-							get_collator_keys_from_seed::&lt;AuraId&gt;(<span class="string">&quot;Alice&quot;</span>),
-						),
-						(
-							get_account_id_from_seed::&lt;sr25519::Public&gt;(<span class="string">&quot;Bob&quot;</span>),
-							get_collator_keys_from_seed::&lt;AuraId&gt;(<span class="string">&quot;Bob&quot;</span>),
-						),
-					],
-					<span class="macro">vec!</span>[
-						get_account_id_from_seed::&lt;sr25519::Public&gt;(<span class="string">&quot;Alice&quot;</span>),
-						get_account_id_from_seed::&lt;sr25519::Public&gt;(<span class="string">&quot;Bob&quot;</span>),
-						get_account_id_from_seed::&lt;sr25519::Public&gt;(<span class="string">&quot;Charlie&quot;</span>),
-						get_account_id_from_seed::&lt;sr25519::Public&gt;(<span class="string">&quot;Dave&quot;</span>),
-						get_account_id_from_seed::&lt;sr25519::Public&gt;(<span class="string">&quot;Eve&quot;</span>),
-						get_account_id_from_seed::&lt;sr25519::Public&gt;(<span class="string">&quot;Ferdie&quot;</span>),
-						get_account_id_from_seed::&lt;sr25519::Public&gt;(<span class="string">&quot;Alice//stash&quot;</span>),
-						get_account_id_from_seed::&lt;sr25519::Public&gt;(<span class="string">&quot;Bob//stash&quot;</span>),
-						get_account_id_from_seed::&lt;sr25519::Public&gt;(<span class="string">&quot;Charlie//stash&quot;</span>),
-						get_account_id_from_seed::&lt;sr25519::Public&gt;(<span class="string">&quot;Dave//stash&quot;</span>),
-						get_account_id_from_seed::&lt;sr25519::Public&gt;(<span class="string">&quot;Eve//stash&quot;</span>),
-						get_account_id_from_seed::&lt;sr25519::Public&gt;(<span class="string">&quot;Ferdie//stash&quot;</span>),
-					],
-					para_id,
-				)
-			},
-			Vec::new(),
-			<span class="prelude-val">None</span>,
-			<span class="prelude-val">None</span>,
-			<span class="prelude-val">None</span>,
-			<span class="prelude-val">Some</span>(properties),
-			Extensions { relay_chain: relay_chain.to_string(), para_id: para_id.into() },
-		)
-	}
 
 	<span class="kw">pub fn </span>local_config&lt;ModifyProperties: Fn(<span class="kw-2">&amp;mut </span>sc_chain_spec::Properties)&gt;(
 		id: <span class="kw-2">&amp;</span>str,
 		chain_name: <span class="kw-2">&amp;</span>str,
 		relay_chain: <span class="kw-2">&amp;</span>str,
 		para_id: ParaId,
+		bridges_pallet_owner_seed: <span class="prelude-ty">Option</span>&lt;String&gt;,
 		modify_props: ModifyProperties,
 	) -&gt; BridgeHubChainSpec {
 		<span class="comment">// Rococo defaults
@@ -1001,6 +873,9 @@
 						get_account_id_from_seed::&lt;sr25519::Public&gt;(<span class="string">&quot;Ferdie//stash&quot;</span>),
 					],
 					para_id,
+					bridges_pallet_owner_seed
+						.as_ref()
+						.map(|seed| get_account_id_from_seed::&lt;sr25519::Public&gt;(seed)),
 				)
 			},
 			Vec::new(),
@@ -1016,17 +891,22 @@
 		invulnerables: Vec&lt;(AccountId, AuraId)&gt;,
 		endowed_accounts: Vec&lt;AccountId&gt;,
 		id: ParaId,
-	) -&gt; bridge_hub_rococo_runtime::GenesisConfig {
-		bridge_hub_rococo_runtime::GenesisConfig {
+		bridges_pallet_owner: <span class="prelude-ty">Option</span>&lt;AccountId&gt;,
+	) -&gt; bridge_hub_rococo_runtime::RuntimeGenesisConfig {
+		bridge_hub_rococo_runtime::RuntimeGenesisConfig {
 			system: bridge_hub_rococo_runtime::SystemConfig {
 				code: bridge_hub_rococo_runtime::WASM_BINARY
 					.expect(<span class="string">&quot;WASM binary was not build, please build it!&quot;</span>)
 					.to_vec(),
+				..Default::default()
 			},
 			balances: bridge_hub_rococo_runtime::BalancesConfig {
 				balances: endowed_accounts.iter().cloned().map(|k| (k, <span class="number">1 </span>&lt;&lt; <span class="number">60</span>)).collect(),
 			},
-			parachain_info: bridge_hub_rococo_runtime::ParachainInfoConfig { parachain_id: id },
+			parachain_info: bridge_hub_rococo_runtime::ParachainInfoConfig {
+				parachain_id: id,
+				..Default::default()
+			},
 			collator_selection: bridge_hub_rococo_runtime::CollatorSelectionConfig {
 				invulnerables: invulnerables.iter().cloned().map(|(acc, <span class="kw">_</span>)| acc).collect(),
 				candidacy_bond: BRIDGE_HUB_ROCOCO_ED * <span class="number">16</span>,
@@ -1049,6 +929,23 @@
 			parachain_system: Default::default(),
 			polkadot_xcm: bridge_hub_rococo_runtime::PolkadotXcmConfig {
 				safe_xcm_version: <span class="prelude-val">Some</span>(SAFE_XCM_VERSION),
+				..Default::default()
+			},
+			bridge_wococo_grandpa: bridge_hub_rococo_runtime::BridgeWococoGrandpaConfig {
+				owner: bridges_pallet_owner.clone(),
+				..Default::default()
+			},
+			bridge_rococo_grandpa: bridge_hub_rococo_runtime::BridgeRococoGrandpaConfig {
+				owner: bridges_pallet_owner.clone(),
+				..Default::default()
+			},
+			bridge_rococo_messages: bridge_hub_rococo_runtime::BridgeRococoMessagesConfig {
+				owner: bridges_pallet_owner.clone(),
+				..Default::default()
+			},
+			bridge_wococo_messages: bridge_hub_rococo_runtime::BridgeWococoMessagesConfig {
+				owner: bridges_pallet_owner,
+				..Default::default()
 			},
 		}
 	}
@@ -1070,21 +967,18 @@
 		chain_name: <span class="kw-2">&amp;</span>str,
 		relay_chain: <span class="kw-2">&amp;</span>str,
 		para_id: ParaId,
+		bridges_pallet_owner_seed: <span class="prelude-ty">Option</span>&lt;String&gt;,
 	) -&gt; BridgeHubChainSpec {
-		rococo::local_config(id, chain_name, relay_chain, para_id, |properties| {
-			properties.insert(<span class="string">&quot;tokenSymbol&quot;</span>.into(), <span class="string">&quot;WOOK&quot;</span>.into());
-		})
-	}
-
-	<span class="kw">pub fn </span>live_config(
-		id: <span class="kw-2">&amp;</span>str,
-		chain_name: <span class="kw-2">&amp;</span>str,
-		relay_chain: <span class="kw-2">&amp;</span>str,
-		para_id: ParaId,
-	) -&gt; BridgeHubChainSpec {
-		rococo::live_config(id, chain_name, relay_chain, para_id, |properties| {
-			properties.insert(<span class="string">&quot;tokenSymbol&quot;</span>.into(), <span class="string">&quot;WOOK&quot;</span>.into());
-		})
+		rococo::local_config(
+			id,
+			chain_name,
+			relay_chain,
+			para_id,
+			bridges_pallet_owner_seed,
+			|properties| {
+				properties.insert(<span class="string">&quot;tokenSymbol&quot;</span>.into(), <span class="string">&quot;WOOK&quot;</span>.into());
+			},
+		)
 	}
 }
 
@@ -1106,7 +1000,7 @@
 
 	<span class="doccomment">/// Specialized `ChainSpec` for the normal parachain runtime.
 	</span><span class="kw">pub type </span>BridgeHubChainSpec =
-		sc_service::GenericChainSpec&lt;bridge_hub_kusama_runtime::GenesisConfig, Extensions&gt;;
+		sc_service::GenericChainSpec&lt;bridge_hub_kusama_runtime::RuntimeGenesisConfig, Extensions&gt;;
 	<span class="kw">pub type </span>RuntimeApi = bridge_hub_kusama_runtime::RuntimeApi;
 
 	<span class="kw">pub fn </span>local_config(
@@ -1169,12 +1063,13 @@
 		invulnerables: Vec&lt;(AccountId, AuraId)&gt;,
 		endowed_accounts: Vec&lt;AccountId&gt;,
 		id: ParaId,
-	) -&gt; bridge_hub_kusama_runtime::GenesisConfig {
-		bridge_hub_kusama_runtime::GenesisConfig {
+	) -&gt; bridge_hub_kusama_runtime::RuntimeGenesisConfig {
+		bridge_hub_kusama_runtime::RuntimeGenesisConfig {
 			system: bridge_hub_kusama_runtime::SystemConfig {
 				code: bridge_hub_kusama_runtime::WASM_BINARY
 					.expect(<span class="string">&quot;WASM binary was not build, please build it!&quot;</span>)
 					.to_vec(),
+				..Default::default()
 			},
 			balances: bridge_hub_kusama_runtime::BalancesConfig {
 				balances: endowed_accounts
@@ -1183,7 +1078,10 @@
 					.map(|k| (k, BRIDGE_HUB_KUSAMA_ED * <span class="number">524_288</span>))
 					.collect(),
 			},
-			parachain_info: bridge_hub_kusama_runtime::ParachainInfoConfig { parachain_id: id },
+			parachain_info: bridge_hub_kusama_runtime::ParachainInfoConfig {
+				parachain_id: id,
+				..Default::default()
+			},
 			collator_selection: bridge_hub_kusama_runtime::CollatorSelectionConfig {
 				invulnerables: invulnerables.iter().cloned().map(|(acc, <span class="kw">_</span>)| acc).collect(),
 				candidacy_bond: BRIDGE_HUB_KUSAMA_ED * <span class="number">16</span>,
@@ -1206,6 +1104,7 @@
 			parachain_system: Default::default(),
 			polkadot_xcm: bridge_hub_kusama_runtime::PolkadotXcmConfig {
 				safe_xcm_version: <span class="prelude-val">Some</span>(SAFE_XCM_VERSION),
+				..Default::default()
 			},
 		}
 	}
@@ -1238,7 +1137,7 @@
 
 	<span class="doccomment">/// Specialized `ChainSpec` for the normal parachain runtime.
 	</span><span class="kw">pub type </span>BridgeHubChainSpec =
-		sc_service::GenericChainSpec&lt;bridge_hub_polkadot_runtime::GenesisConfig, Extensions&gt;;
+		sc_service::GenericChainSpec&lt;bridge_hub_polkadot_runtime::RuntimeGenesisConfig, Extensions&gt;;
 	<span class="kw">pub type </span>RuntimeApi = bridge_hub_polkadot_runtime::RuntimeApi;
 
 	<span class="kw">pub fn </span>local_config(
@@ -1301,12 +1200,13 @@
 		invulnerables: Vec&lt;(AccountId, AuraId)&gt;,
 		endowed_accounts: Vec&lt;AccountId&gt;,
 		id: ParaId,
-	) -&gt; bridge_hub_polkadot_runtime::GenesisConfig {
-		bridge_hub_polkadot_runtime::GenesisConfig {
+	) -&gt; bridge_hub_polkadot_runtime::RuntimeGenesisConfig {
+		bridge_hub_polkadot_runtime::RuntimeGenesisConfig {
 			system: bridge_hub_polkadot_runtime::SystemConfig {
 				code: bridge_hub_polkadot_runtime::WASM_BINARY
 					.expect(<span class="string">&quot;WASM binary was not build, please build it!&quot;</span>)
 					.to_vec(),
+				..Default::default()
 			},
 			balances: bridge_hub_polkadot_runtime::BalancesConfig {
 				balances: endowed_accounts
@@ -1315,7 +1215,10 @@
 					.map(|k| (k, BRIDGE_HUB_POLKADOT_ED * <span class="number">4096</span>))
 					.collect(),
 			},
-			parachain_info: bridge_hub_polkadot_runtime::ParachainInfoConfig { parachain_id: id },
+			parachain_info: bridge_hub_polkadot_runtime::ParachainInfoConfig {
+				parachain_id: id,
+				..Default::default()
+			},
 			collator_selection: bridge_hub_polkadot_runtime::CollatorSelectionConfig {
 				invulnerables: invulnerables.iter().cloned().map(|(acc, <span class="kw">_</span>)| acc).collect(),
 				candidacy_bond: BRIDGE_HUB_POLKADOT_ED * <span class="number">16</span>,
@@ -1338,9 +1241,9 @@
 			parachain_system: Default::default(),
 			polkadot_xcm: bridge_hub_polkadot_runtime::PolkadotXcmConfig {
 				safe_xcm_version: <span class="prelude-val">Some</span>(SAFE_XCM_VERSION),
+				..Default::default()
 			},
 		}
 	}
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="polkadot_parachain" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.2 (9eb3afe9e 2023-03-27)" data-search-js="search-98d53477a794af0b.js" data-settings-js="settings-c3c521c753752a1a.js" data-settings-css="settings-08ddfdda51b8ee2e.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

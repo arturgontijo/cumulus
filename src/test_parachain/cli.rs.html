@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `test/service/src/cli.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>cli.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-1f7d512b176f0f72.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-124a1ca42af929b6.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-93196c7a1c3542a8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-4743e13df3dfe8c4.css"><link rel="stylesheet" disabled href="../../static.files/dark-0e1b889528bd466b.css"><link rel="stylesheet" disabled href="../../static.files/ayu-65289d5d067c7c66.css"><script id="default-settings" ></script><script src="../../static.files/storage-d43fa987303ecbbb.js"></script><script defer src="../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-3367e395607fafc1.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../test_parachain/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `test/service/src/cli.rs`."><title>cli.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-ba5701c5741a7b69.css" id="mainThemeStyle"><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="test_parachain" data-themes="" data-resource-suffix="" data-rustdoc-version="1.70.0 (90c541806 2023-05-31)" data-search-js="search-e077946657036a58.js" data-settings-js="settings-298e1ea74db45b39.js" data-settings-css="settings-7bfb4c59cc6bc502.css" data-theme-light-css="light-0f8c037637f9eb3e.css" data-theme-dark-css="dark-1097f8e92a01e3cf.css" data-theme-ayu-css="ayu-614652228113ac93.css" ></div><script src="../../static.files/storage-62ce34ea385b278a.js"></script><script defer src="../../static.files/source-script-905937fbbdc8e9ea.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-f61008743c98d196.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-0f8c037637f9eb3e.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-1097f8e92a01e3cf.css"><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../test_parachain/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -334,23 +334,7 @@
 <a href="#334" id="334">334</a>
 <a href="#335" id="335">335</a>
 <a href="#336" id="336">336</a>
-<a href="#337" id="337">337</a>
-<a href="#338" id="338">338</a>
-<a href="#339" id="339">339</a>
-<a href="#340" id="340">340</a>
-<a href="#341" id="341">341</a>
-<a href="#342" id="342">342</a>
-<a href="#343" id="343">343</a>
-<a href="#344" id="344">344</a>
-<a href="#345" id="345">345</a>
-<a href="#346" id="346">346</a>
-<a href="#347" id="347">347</a>
-<a href="#348" id="348">348</a>
-<a href="#349" id="349">349</a>
-<a href="#350" id="350">350</a>
-<a href="#351" id="351">351</a>
-<a href="#352" id="352">352</a>
-</pre><pre class="rust"><code><span class="comment">// Copyright 2022 Parity Technologies (UK) Ltd.
+</pre></div><pre class="rust"><code><span class="comment">// Copyright 2022 Parity Technologies (UK) Ltd.
 // This file is part of Cumulus.
 
 // Cumulus is free software: you can redistribute it and/or modify
@@ -371,7 +355,7 @@
 <span class="kw">use </span>polkadot_service::{ChainSpec, ParaId, PrometheusConfig};
 <span class="kw">use </span>sc_cli::{
 	CliConfiguration, DefaultConfigurationValues, ImportParams, KeystoreParams, NetworkParams,
-	<span class="prelude-ty">Result </span><span class="kw">as </span>CliResult, RuntimeVersion, SharedParams, SubstrateCli,
+	<span class="prelude-ty">Result </span><span class="kw">as </span>CliResult, SharedParams, SubstrateCli,
 };
 <span class="kw">use </span>sc_service::BasePath;
 
@@ -469,8 +453,12 @@
 		para_config: <span class="kw-2">&amp;</span>sc_service::Configuration,
 		relay_chain_args: <span class="kw">impl </span>Iterator&lt;Item = <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>String&gt;,
 	) -&gt; <span class="self">Self </span>{
-		<span class="kw">let </span>base_path = para_config.base_path.as_ref().map(|x| x.path().join(<span class="string">&quot;polkadot&quot;</span>));
-		<span class="self">Self </span>{ base_path, chain_id: <span class="prelude-val">None</span>, base: clap::Parser::parse_from(relay_chain_args) }
+		<span class="kw">let </span>base_path = para_config.base_path.path().join(<span class="string">&quot;polkadot&quot;</span>);
+		<span class="self">Self </span>{
+			base_path: <span class="prelude-val">Some</span>(base_path),
+			chain_id: <span class="prelude-val">None</span>,
+			base: clap::Parser::parse_from(relay_chain_args),
+		}
 	}
 }
 
@@ -498,16 +486,8 @@
 			</span>.or_else(|| <span class="self">self</span>.base_path.clone().map(Into::into)))
 	}
 
-	<span class="kw">fn </span>rpc_http(<span class="kw-2">&amp;</span><span class="self">self</span>, default_listen_port: u16) -&gt; CliResult&lt;<span class="prelude-ty">Option</span>&lt;SocketAddr&gt;&gt; {
-		<span class="self">self</span>.base.base.rpc_http(default_listen_port)
-	}
-
-	<span class="kw">fn </span>rpc_ipc(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; CliResult&lt;<span class="prelude-ty">Option</span>&lt;String&gt;&gt; {
-		<span class="self">self</span>.base.base.rpc_ipc()
-	}
-
-	<span class="kw">fn </span>rpc_ws(<span class="kw-2">&amp;</span><span class="self">self</span>, default_listen_port: u16) -&gt; CliResult&lt;<span class="prelude-ty">Option</span>&lt;SocketAddr&gt;&gt; {
-		<span class="self">self</span>.base.base.rpc_ws(default_listen_port)
+	<span class="kw">fn </span>rpc_addr(<span class="kw-2">&amp;</span><span class="self">self</span>, default_listen_port: u16) -&gt; CliResult&lt;<span class="prelude-ty">Option</span>&lt;SocketAddr&gt;&gt; {
+		<span class="self">self</span>.base.base.rpc_addr(default_listen_port)
 	}
 
 	<span class="kw">fn </span>prometheus_config(
@@ -556,8 +536,8 @@
 		<span class="self">self</span>.base.base.rpc_methods()
 	}
 
-	<span class="kw">fn </span>rpc_ws_max_connections(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; CliResult&lt;<span class="prelude-ty">Option</span>&lt;usize&gt;&gt; {
-		<span class="self">self</span>.base.base.rpc_ws_max_connections()
+	<span class="kw">fn </span>rpc_max_connections(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; CliResult&lt;u32&gt; {
+		<span class="self">self</span>.base.base.rpc_max_connections()
 	}
 
 	<span class="kw">fn </span>rpc_cors(<span class="kw-2">&amp;</span><span class="self">self</span>, is_dev: bool) -&gt; CliResult&lt;<span class="prelude-ty">Option</span>&lt;Vec&lt;String&gt;&gt;&gt; {
@@ -601,12 +581,8 @@
 		<span class="number">30334
 	</span>}
 
-	<span class="kw">fn </span>rpc_ws_listen_port() -&gt; u16 {
+	<span class="kw">fn </span>rpc_listen_port() -&gt; u16 {
 		<span class="number">9945
-	</span>}
-
-	<span class="kw">fn </span>rpc_http_listen_port() -&gt; u16 {
-		<span class="number">9934
 	</span>}
 
 	<span class="kw">fn </span>prometheus_listen_port() -&gt; u16 {
@@ -656,10 +632,6 @@
 			},
 		})
 	}
-
-	<span class="kw">fn </span>native_runtime_version(<span class="kw">_</span>: <span class="kw-2">&amp;</span>Box&lt;<span class="kw">dyn </span>ChainSpec&gt;) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>RuntimeVersion {
-		<span class="kw-2">&amp;</span>cumulus_test_service::runtime::VERSION
-	}
 }
 
 <span class="kw">impl </span>SubstrateCli <span class="kw">for </span>RelayChainCli {
@@ -697,10 +669,5 @@
 		&lt;polkadot_cli::Cli <span class="kw">as </span>SubstrateCli&gt;::from_iter([RelayChainCli::executable_name()].iter())
 			.load_spec(id)
 	}
-
-	<span class="kw">fn </span>native_runtime_version(chain_spec: <span class="kw-2">&amp;</span>Box&lt;<span class="kw">dyn </span>ChainSpec&gt;) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>RuntimeVersion {
-		polkadot_cli::Cli::native_runtime_version(chain_spec)
-	}
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="test_parachain" data-themes="" data-resource-suffix="" data-rustdoc-version="1.68.2 (9eb3afe9e 2023-03-27)" data-search-js="search-98d53477a794af0b.js" data-settings-js="settings-c3c521c753752a1a.js" data-settings-css="settings-08ddfdda51b8ee2e.css" ></div></body></html>
+</code></pre></div></section></main></body></html>
